@@ -1,0 +1,318 @@
+<!DOCTYPE html>
+<html>
+<head>
+  <meta charset="utf-8">
+  
+  <title>HTML+CSS+JS实现的贪吃蛇游戏&lt;一&gt; | WHJ&#39;s blog</title>
+  <meta name="viewport" content="width=device-width, initial-scale=1, maximum-scale=1">
+  <meta name="description" content="最近都在学习js，学习间隙总想拿点项目练习，而贪吃蛇作为一个简单的小游戏正适合。相信大家都玩过贪吃蛇，我记得我第一次看到这个游戏是在小学的时候。当时家里买了个新手机，黑白的屏幕，点开游戏映入眼帘的就是贪吃蛇。虽然当时手机屏幕还是那么的小，分辨率还是那么低，但是这个游戏还是让我不亦乐乎，好了扯远了，下面我们就用js实现一下这个游戏吧！">
+<meta property="og:type" content="article">
+<meta property="og:title" content="HTML+CSS+JS实现的贪吃蛇游戏<一>">
+<meta property="og:url" content="http://yoursite.com/2014/12/02/2014-12-02-201531/">
+<meta property="og:site_name" content="WHJ's blog">
+<meta property="og:description" content="最近都在学习js，学习间隙总想拿点项目练习，而贪吃蛇作为一个简单的小游戏正适合。相信大家都玩过贪吃蛇，我记得我第一次看到这个游戏是在小学的时候。当时家里买了个新手机，黑白的屏幕，点开游戏映入眼帘的就是贪吃蛇。虽然当时手机屏幕还是那么的小，分辨率还是那么低，但是这个游戏还是让我不亦乐乎，好了扯远了，下面我们就用js实现一下这个游戏吧！">
+<meta name="twitter:card" content="summary">
+<meta name="twitter:title" content="HTML+CSS+JS实现的贪吃蛇游戏<一>">
+<meta name="twitter:description" content="最近都在学习js，学习间隙总想拿点项目练习，而贪吃蛇作为一个简单的小游戏正适合。相信大家都玩过贪吃蛇，我记得我第一次看到这个游戏是在小学的时候。当时家里买了个新手机，黑白的屏幕，点开游戏映入眼帘的就是贪吃蛇。虽然当时手机屏幕还是那么的小，分辨率还是那么低，但是这个游戏还是让我不亦乐乎，好了扯远了，下面我们就用js实现一下这个游戏吧！">
+
+  
+    <link rel="alternative" href="/atom.xml" title="WHJ&#39;s blog" type="application/atom+xml">
+  
+  
+    <link rel="icon" href="/favicon.png">
+  
+  <link rel="stylesheet" href="/css/style.css" type="text/css">
+
+  <script src="http://libs.baidu.com/jquery/1.9.0/jquery.js"></script>
+</head>
+<body>
+  <div id="container">
+    <div class="left-col">
+    <div class="overlay"></div>
+<div class="intrude-less">
+	<header id="header" class="inner">
+		<div class="profilepic">
+			<img src="http://whj-img.qiniudn.com/2014-11-03_145609.png">
+		</div>
+
+		<hgroup>
+		  <h1 class="header-author"><a href="/">WHJ</a></h1>
+		</hgroup>
+
+		
+		<p class="header-subtitle">WHJ&#39;s Heroic Joker</p>
+		
+
+		
+			<div class="switch-btn">
+				<div class="icon">
+					<div class="icon-ctn">
+						<div class="icon-wrap icon-house" data-idx="0">
+							<div class="birdhouse"></div>
+							<div class="birdhouse_holes"></div>
+						</div>
+						<div class="icon-wrap icon-ribbon hide" data-idx="1">
+							<div class="ribbon"></div>
+						</div>
+						
+						<div class="icon-wrap icon-link hide" data-idx="2">
+							<div class="loopback_l"></div>
+							<div class="loopback_r"></div>
+						</div>
+						
+						
+					</div>
+					
+				</div>
+				<div class="tips-box hide">
+					<div class="tips-arrow"></div>
+					<ul class="tips-inner">
+						<li>菜单</li>
+						<li>标签</li>
+						
+						<li>友情链接</li>
+						
+						
+					</ul>
+				</div>
+			</div>
+		
+
+		<div class="switch-area">
+			<div class="switch-wrap">
+				<section class="switch-part switch-part1">
+					<nav class="header-menu">
+						<ul>
+						
+							<li><a href="/">主页</a></li>
+				        
+							<li><a href="/archives">所有文章</a></li>
+				        
+							<li><a href="/about">关于作者</a></li>
+				        
+						</ul>
+					</nav>
+					<nav class="header-nav">
+						<div class="social">
+							
+								<a class="github" target="_blank" href="https://github.com/whjgithub" title="github">github</a>
+					        
+								<a class="rss" target="_blank" href="/atom.xml" title="rss">rss</a>
+					        
+						</div>
+					</nav>
+				</section>
+				
+				
+				<section class="switch-part switch-part2">
+					<div class="widget tagcloud">
+						<a href="/tags/javascript/" style="font-size: 10.00px;">javascript</a><a href="/tags/python/" style="font-size: 20.00px;">python</a><a href="/tags/原创/" style="font-size: 10.00px;">原创</a><a href="/tags/笔记/" style="font-size: 20.00px;">笔记</a><a href="/tags/随笔/" style="font-size: 10.00px;">随笔</a>
+					</div>
+				</section>
+				
+				
+				
+				<section class="switch-part switch-part3">
+					
+			          <a target="_blank" class="main-nav-link switch-friends-link" href="http://chenpengdsp.com">CP师兄的博客</a>
+			        
+				</section>
+				
+
+				
+			</div>
+		</div>
+	</header>				
+</div>
+    </div>
+    <div class="mid-col">
+      <nav id="mobile-nav">
+  	<div class="overlay"></div>
+	<div class="intrude-less">
+		<header id="header" class="inner">
+			<div class="profilepic">
+				<img src="http://whj-img.qiniudn.com/2014-11-03_145609.png">
+			</div>
+
+			<hgroup>
+			  <h1 class="header-author"><a href="/">WHJ</a></h1>
+			</hgroup>
+			
+			<p class="header-subtitle">WHJ&#39;s Heroic Joker</p>
+			
+			<nav class="header-menu">
+				<ul>
+				
+					<li><a href="/">主页</a></li>
+		        
+					<li><a href="/archives">所有文章</a></li>
+		        
+					<li><a href="/about">关于作者</a></li>
+		        
+		        <div class="clearfix"></div>
+				</ul>
+			</nav>
+			<nav class="header-nav">
+				<div class="social">
+					
+						<a class="github" target="_blank" href="https://github.com/whjgithub" title="github">github</a>
+			        
+						<a class="rss" target="_blank" href="/atom.xml" title="rss">rss</a>
+			        
+				</div>
+			</nav>
+		</header>				
+	</div>
+</nav>
+      <article id="post-2014-12-02-201531" class="article article-type-post" itemscope itemprop="blogPost">
+  
+    <div class="article-meta">
+      <a href="/2014/12/02/2014-12-02-201531/" class="article-date">
+  	<time datetime="2014-12-02T12:15:31.000Z" itemprop="datePublished">Dec 2 2014</time>
+</a>
+      
+      
+  <ul class="article-tag-list"><li class="article-tag-list-item"><a class="article-tag-list-link" href="/tags/javascript/">javascript</a></li><li class="article-tag-list-item"><a class="article-tag-list-link" href="/tags/笔记/">笔记</a></li></ul>
+
+    </div>
+  
+  <div class="article-inner">
+    
+      <input type="hidden" class="isFancy" />
+    
+    
+      <header class="article-header">
+        
+  
+    <h1 class="article-title" itemprop="name">
+      HTML+CSS+JS实现的贪吃蛇游戏&lt;一&gt;
+    </h1>
+  
+
+      </header>
+    
+    <div class="article-entry" itemprop="articleBody">
+      
+        <p>　　最近都在学习js，学习间隙总想拿点项目练习，而贪吃蛇作为一个简单的小游戏正适合。相信大家都玩过贪吃蛇，我记得我第一次看到这个游戏是在小学的时候。当时家里买了个新手机，黑白的屏幕，点开游戏映入眼帘的就是贪吃蛇。虽然当时手机屏幕还是那么的小，分辨率还是那么低，但是这个游戏还是让我不亦乐乎，好了扯远了，下面我们就用js实现一下这个游戏吧！<br><a id="more"></a><br>　　首先，作为一名初学者，我搜索了一下网络上现有的资料，然后看到了<a href="http://www.dwww.cn/News/2009-9/20099222116569975.shtml" target="_blank" rel="external">一段相关的代码</a>，虽然时间已经很久了，但是我试玩了一下，觉得界面很清新，很喜欢，所以就决定按此来借鉴学习了。<br>　　他的代码是没有分开的，所有的代码都写在了一个文件里。我在后面会把它分开来，然后，他的代码是没有按面向对象来写的，我也会把它改进。好了下面开始正式讲解。<br>　　我们先理一理游戏的逻辑：</p>
+<blockquote>
+<ol>
+<li>建立一个游戏的地图</li>
+<li>绘出蛇和它的食物</li>
+<li>让蛇动起来</li>
+<li>增加一些判定机制</li>
+<li>增加一些其他娱乐元素</li>
+</ol>
+</blockquote>
+<h2 id="第一步">第一步</h2>
+<p>　　要建立一个游戏的地图。此处的前提是有一个html页面，我们的重点不是如何编写html和css，所以我就直接给出我最后的代码了。此代码是根据我上述提到的代码改的，其中添加了一部分元素。</p>
+<figure class="highlight"><table><tr><td class="gutter"><pre><div class="line">1</div><div class="line">2</div><div class="line">3</div><div class="line">4</div><div class="line">5</div><div class="line">6</div><div class="line">7</div><div class="line">8</div><div class="line">9</div><div class="line">10</div><div class="line">11</div><div class="line">12</div><div class="line">13</div><div class="line">14</div><div class="line">15</div><div class="line">16</div><div class="line">17</div><div class="line">18</div><div class="line">19</div><div class="line">20</div><div class="line">21</div><div class="line">22</div><div class="line">23</div><div class="line">24</div><div class="line">25</div><div class="line">26</div><div class="line">27</div><div class="line">28</div><div class="line">29</div><div class="line">30</div><div class="line">31</div></pre></td><td class="code"><pre><div class="line"><span class="doctype">&lt;!DOCTYPE html&gt;</span></div><div class="line"><span class="tag">&lt;<span class="title">html</span>&gt;</span></div><div class="line">	<span class="tag">&lt;<span class="title">head</span>&gt;</span></div><div class="line">		<span class="tag">&lt;<span class="title">meta</span> <span class="attribute">charset</span>=<span class="value">"utf-8"</span> /&gt;</span></div><div class="line">		<span class="tag">&lt;<span class="title">title</span>&gt;</span>贪吃蛇<span class="tag">&lt;/<span class="title">title</span>&gt;</span></div><div class="line">		<span class="tag">&lt;<span class="title">link</span> <span class="attribute">rel</span>=<span class="value">"stylesheet"</span> <span class="attribute">href</span>=<span class="value">"snake.css"</span> /&gt;</span><span class="comment">&lt;!--此处为css文件，使用时注意文件名和位置，下面的是js文件，同样要注意--&gt;</span></div><div class="line">		<span class="tag">&lt;<span class="title">script</span> <span class="attribute">type</span>=<span class="value">"text/javascript"</span> <span class="attribute">src</span>=<span class="value">"snake_class.js"</span> &gt;</span><span class="javascript"></span><span class="tag">&lt;/<span class="title">script</span>&gt;</span></div><div class="line">	<span class="tag">&lt;/<span class="title">head</span>&gt;</span></div><div class="line">	<span class="tag">&lt;<span class="title">body</span>&gt;</span></div><div class="line">		<span class="tag">&lt;<span class="title">div</span> <span class="attribute">id</span>=<span class="value">"say"</span>&gt;</span>贪吃蛇<span class="tag">&lt;/<span class="title">div</span>&gt;</span></div><div class="line">		<span class="tag">&lt;<span class="title">span</span> <span class="attribute">class</span>=<span class="value">"best"</span>&gt;</span>最高分：<span class="tag">&lt;<span class="title">strong</span> <span class="attribute">id</span>=<span class="value">"best_score"</span>&gt;</span>0<span class="tag">&lt;/<span class="title">strong</span>&gt;</span><span class="tag">&lt;/<span class="title">span</span>&gt;</span><span class="tag">&lt;<span class="title">br</span> /&gt;</span></div><div class="line">		<span class="tag">&lt;<span class="title">span</span> <span class="attribute">style</span>=<span class="value">"float: right;"</span>&gt;</span>方向键：控制方向，空格：暂停/开始<span class="tag">&lt;/<span class="title">span</span>&gt;</span></div><div class="line">		<span class="tag">&lt;<span class="title">div</span> <span class="attribute">id</span>=<span class="value">"snakeWrap"</span>&gt;</span><span class="tag">&lt;/<span class="title">div</span>&gt;</span></div><div class="line">		<span class="tag">&lt;<span class="title">div</span> <span class="attribute">id</span>=<span class="value">"help"</span>&gt;</span></div><div class="line">	    	<span class="tag">&lt;<span class="title">span</span> <span class="attribute">class</span>=<span class="value">"box food"</span>&gt;</span><span class="tag">&lt;/<span class="title">span</span>&gt;</span><span class="tag">&lt;<span class="title">span</span>&gt;</span>绿色加分<span class="tag">&lt;/<span class="title">span</span>&gt;</span></div><div class="line">	        <span class="tag">&lt;<span class="title">span</span> <span class="attribute">class</span>=<span class="value">"box block"</span>&gt;</span><span class="tag">&lt;/<span class="title">span</span>&gt;</span><span class="tag">&lt;<span class="title">span</span>&gt;</span>灰色路障<span class="tag">&lt;/<span class="title">span</span>&gt;</span></div><div class="line">	        <span class="tag">&lt;<span class="title">span</span> <span class="attribute">class</span>=<span class="value">"box skate"</span>&gt;</span><span class="tag">&lt;/<span class="title">span</span>&gt;</span><span class="tag">&lt;<span class="title">span</span>&gt;</span>蓝色加速<span class="tag">&lt;/<span class="title">span</span>&gt;</span></div><div class="line">	        <span class="tag">&lt;<span class="title">span</span> <span class="attribute">class</span>=<span class="value">"box brake"</span>&gt;</span><span class="tag">&lt;/<span class="title">span</span>&gt;</span><span class="tag">&lt;<span class="title">span</span>&gt;</span>红色减速<span class="tag">&lt;/<span class="title">span</span>&gt;</span></div><div class="line">	        <span class="tag">&lt;<span class="title">span</span> <span class="attribute">style</span>=<span class="value">"float:right"</span>&gt;</span>目前得分：<span class="tag">&lt;<span class="title">strong</span> <span class="attribute">id</span>=<span class="value">"score"</span>&gt;</span>0<span class="tag">&lt;/<span class="title">strong</span>&gt;</span><span class="tag">&lt;/<span class="title">span</span>&gt;</span>      </div><div class="line">	        <span class="tag">&lt;<span class="title">input</span> <span class="attribute">type</span>=<span class="value">"button"</span> <span class="attribute">id</span>=<span class="value">"btnStart"</span> <span class="attribute">value</span>=<span class="value">"开始游戏"</span> /&gt;</span></div><div class="line">	        <span class="tag">&lt;<span class="title">div</span> <span class="attribute">id</span>=<span class="value">"size"</span>&gt;</span></div><div class="line">	        	<span class="tag">&lt;<span class="title">p</span> <span class="attribute">style</span>=<span class="value">"width: 150px;color: white;float: left;"</span>&gt;</span>请选择游戏地图大小：<span class="tag">&lt;/<span class="title">p</span>&gt;</span><span class="tag">&lt;<span class="title">br</span> /&gt;</span></div><div class="line">		        <span class="tag">&lt;<span class="title">form</span> <span class="attribute">style</span>=<span class="value">"width: 200px;float: left;"</span>&gt;</span></div><div class="line">		        	<span class="tag">&lt;<span class="title">input</span> <span class="attribute">type</span>=<span class="value">"radio"</span> <span class="attribute">name</span>=<span class="value">"size"</span>  <span class="attribute">value</span>=<span class="value">"20"</span> <span class="attribute">checked</span>=<span class="value">"true"</span>&gt;</span><span class="tag">&lt;<span class="title">span</span> <span class="attribute">style</span>=<span class="value">"float: none;"</span>&gt;</span>20*20<span class="tag">&lt;/<span class="title">span</span>&gt;</span><span class="tag">&lt;/<span class="title">input</span>&gt;</span></div><div class="line">		        	<span class="tag">&lt;<span class="title">input</span> <span class="attribute">type</span>=<span class="value">"radio"</span> <span class="attribute">name</span>=<span class="value">"size"</span>  <span class="attribute">value</span>=<span class="value">"40"</span>&gt;</span><span class="tag">&lt;<span class="title">span</span> <span class="attribute">style</span>=<span class="value">"float: none;"</span>&gt;</span>40*20<span class="tag">&lt;/<span class="title">span</span>&gt;</span><span class="tag">&lt;/<span class="title">input</span>&gt;</span></div><div class="line">		        	<span class="tag">&lt;<span class="title">input</span> <span class="attribute">type</span>=<span class="value">"radio"</span> <span class="attribute">name</span>=<span class="value">"size"</span>  <span class="attribute">value</span>=<span class="value">"60"</span>&gt;</span><span class="tag">&lt;<span class="title">span</span> <span class="attribute">style</span>=<span class="value">"float: none;"</span>&gt;</span>60*20<span class="tag">&lt;/<span class="title">span</span>&gt;</span><span class="tag">&lt;/<span class="title">input</span>&gt;</span></div><div class="line">		        <span class="tag">&lt;/<span class="title">form</span>&gt;</span></div><div class="line">	        <span class="tag">&lt;/<span class="title">div</span>&gt;</span>        </div><div class="line">		<span class="tag">&lt;/<span class="title">div</span>&gt;</span></div><div class="line">	<span class="tag">&lt;/<span class="title">body</span>&gt;</span></div><div class="line"><span class="tag">&lt;/<span class="title">html</span>&gt;</span></div></pre></td></tr></table></figure>
+
+
+
+<figure class="highlight"><table><tr><td class="gutter"><pre><div class="line">1</div><div class="line">2</div><div class="line">3</div><div class="line">4</div><div class="line">5</div><div class="line">6</div><div class="line">7</div><div class="line">8</div><div class="line">9</div><div class="line">10</div><div class="line">11</div><div class="line">12</div><div class="line">13</div><div class="line">14</div><div class="line">15</div><div class="line">16</div><div class="line">17</div><div class="line">18</div><div class="line">19</div><div class="line">20</div><div class="line">21</div><div class="line">22</div><div class="line">23</div><div class="line">24</div><div class="line">25</div><div class="line">26</div><div class="line">27</div><div class="line">28</div><div class="line">29</div><div class="line">30</div><div class="line">31</div><div class="line">32</div><div class="line">33</div><div class="line">34</div><div class="line">35</div><div class="line">36</div><div class="line">37</div><div class="line">38</div><div class="line">39</div><div class="line">40</div><div class="line">41</div><div class="line">42</div><div class="line">43</div><div class="line">44</div><div class="line">45</div><div class="line">46</div><div class="line">47</div><div class="line">48</div><div class="line">49</div><div class="line">50</div><div class="line">51</div><div class="line">52</div><div class="line">53</div><div class="line">54</div><div class="line">55</div><div class="line">56</div><div class="line">57</div><div class="line">58</div><div class="line">59</div><div class="line">60</div><div class="line">61</div><div class="line">62</div><div class="line">63</div><div class="line">64</div><div class="line">65</div><div class="line">66</div><div class="line">67</div><div class="line">68</div><div class="line">69</div><div class="line">70</div><div class="line">71</div><div class="line">72</div><div class="line">73</div><div class="line">74</div><div class="line">75</div><div class="line">76</div><div class="line">77</div><div class="line">78</div><div class="line">79</div><div class="line">80</div><div class="line">81</div><div class="line">82</div><div class="line">83</div><div class="line">84</div><div class="line">85</div><div class="line">86</div><div class="line">87</div><div class="line">88</div><div class="line">89</div><div class="line">90</div><div class="line">91</div></pre></td><td class="code"><pre><div class="line">* <span class="rules">{</span></div><div class="line">	<span class="rule"><span class="attribute">padding</span>:<span class="value"> <span class="number">0px</span></span></span>;</div><div class="line">	<span class="rule"><span class="attribute">margin</span>:<span class="value"> <span class="number">0px</span></span></span>;</div><div class="line"><span class="rule">}</span></div><div class="line"><span class="tag">body</span> <span class="rules">{</span></div><div class="line">	<span class="rule"><span class="attribute">background</span>:<span class="value"> <span class="hexcolor">#333</span></span></span>;	</div><div class="line">	<span class="rule"><span class="attribute">-moz-user-select</span>:<span class="value"> none</span></span>;</div><div class="line">	<span class="rule"><span class="attribute">font-size</span>:<span class="value"> <span class="number">12px</span></span></span>;</div><div class="line">	<span class="rule"><span class="attribute">text-align</span>:<span class="value"> center</span></span>;</div><div class="line"><span class="rule">}</span></div><div class="line"><span class="tag">table</span> <span class="rules">{</span></div><div class="line">	<span class="rule"><span class="attribute">margin</span>:<span class="value"> <span class="number">20px</span> auto <span class="number">10px</span> auto</span></span>;</div><div class="line">	<span class="rule"><span class="attribute">overflow</span>:<span class="value"> hidden</span></span>;</div><div class="line">	<span class="rule"><span class="attribute">border-collapse</span>:<span class="value"> collapse</span></span>;</div><div class="line"><span class="rule">}</span></div><div class="line"><span class="tag">td</span> <span class="rules">{</span></div><div class="line">	<span class="rule"><span class="attribute">width</span>:<span class="value"> <span class="number">20px</span></span></span>;</div><div class="line">	<span class="rule"><span class="attribute">height</span>:<span class="value"> <span class="number">20px</span></span></span>;</div><div class="line">	<span class="rule"><span class="attribute">border</span>:<span class="value"> <span class="number">1px</span> solid <span class="hexcolor">#ddd</span></span></span>;</div><div class="line">	<span class="rule"><span class="attribute">background</span>:<span class="value"> <span class="hexcolor">#f4f4f4</span></span></span>;</div><div class="line"><span class="rule">}</span></div><div class="line"><span class="class">.cover</span> <span class="rules">{</span></div><div class="line">	<span class="rule"><span class="attribute">background</span>:<span class="value"> <span class="hexcolor">#39c</span></span></span>;</div><div class="line"><span class="rule">}</span></div><div class="line"><span class="class">.food</span> <span class="rules">{</span></div><div class="line">	<span class="rule"><span class="attribute">background</span>:<span class="value"> <span class="hexcolor">#093</span></span></span>;</div><div class="line"><span class="rule">}</span></div><div class="line"><span class="class">.block</span> <span class="rules">{</span></div><div class="line">	<span class="rule"><span class="attribute">background</span>:<span class="value"> <span class="hexcolor">#333</span></span></span>;</div><div class="line"><span class="rule">}</span></div><div class="line"><span class="class">.brake</span> <span class="rules">{</span></div><div class="line">	<span class="rule"><span class="attribute">background</span>:<span class="value"> <span class="hexcolor">#f00</span></span></span>;</div><div class="line"><span class="rule">}</span></div><div class="line"><span class="class">.skate</span> <span class="rules">{</span></div><div class="line">	<span class="rule"><span class="attribute">background</span>:<span class="value"> <span class="hexcolor">#00f</span></span></span>;</div><div class="line"><span class="rule">}</span></div><div class="line"><span class="id">#help</span> <span class="tag">span</span> <span class="rules">{</span></div><div class="line">	<span class="rule"><span class="attribute">float</span>:<span class="value"> left</span></span>;</div><div class="line">	<span class="rule"><span class="attribute">margin-right</span>:<span class="value"> <span class="number">10px</span></span></span>;</div><div class="line"><span class="rule">}</span></div><div class="line"><span class="id">#help</span> <span class="class">.box</span> <span class="rules">{</span></div><div class="line">	<span class="rule"><span class="attribute">width</span>:<span class="value"> <span class="number">15px</span></span></span>;</div><div class="line">	<span class="rule"><span class="attribute">height</span>:<span class="value"> <span class="number">15px</span></span></span>;</div><div class="line">	<span class="rule"><span class="attribute">margin-right</span>:<span class="value"> <span class="number">5px</span></span></span>;</div><div class="line">	<span class="rule"><span class="attribute">border</span>:<span class="value"> <span class="number">1px</span> solid white</span></span>;</div><div class="line"><span class="rule">}</span></div><div class="line"><span class="id">#help</span> <span class="rules">{</span></div><div class="line">	<span class="rule"><span class="attribute">width</span>:<span class="value"> <span class="number">420px</span></span></span>;</div><div class="line">	<span class="rule"><span class="attribute">margin</span>:<span class="value"> <span class="number">0</span> auto</span></span>;</div><div class="line">	<span class="rule"><span class="attribute">line-height</span>:<span class="value"> <span class="number">17px</span></span></span>;</div><div class="line"><span class="rule">}</span></div><div class="line"><span class="tag">span</span><span class="rules">{</span></div><div class="line">	<span class="rule"><span class="attribute">color</span>:<span class="value"> white</span></span>;</div><div class="line"><span class="rule">}</span></div><div class="line"><span class="id">#say</span> <span class="rules">{</span></div><div class="line">	<span class="rule"><span class="attribute">margin-top</span>:<span class="value"> <span class="number">20px</span></span></span>;</div><div class="line">	<span class="rule"><span class="attribute">margin-bottom</span>:<span class="value"> <span class="number">20px</span></span></span>;</div><div class="line">	<span class="rule"><span class="attribute">color</span>:<span class="value"> white</span></span>;</div><div class="line">	<span class="rule"><span class="attribute">font-size</span>:<span class="value"> <span class="number">14px</span></span></span>;</div><div class="line"><span class="rule">}</span></div><div class="line"><span class="id">#snakeWrap</span> <span class="rules">{</span></div><div class="line">	<span class="rule"><span class="attribute">margin-top</span>:<span class="value"> <span class="number">0px</span></span></span>;</div><div class="line"><span class="rule">}</span></div><div class="line"><span class="id">#btnStart</span> <span class="rules">{</span></div><div class="line">	<span class="rule"><span class="attribute">clear</span>:<span class="value"> both</span></span>;</div><div class="line">	<span class="rule"><span class="attribute">width</span>:<span class="value"> <span class="number">100px</span></span></span>;</div><div class="line">	<span class="rule"><span class="attribute">height</span>:<span class="value"> <span class="number">30px</span></span></span>;</div><div class="line">	<span class="rule"><span class="attribute">margin-top</span>:<span class="value"> <span class="number">10px</span></span></span>;</div><div class="line">	<span class="rule"><span class="attribute">margin-right</span>:<span class="value"> <span class="number">50px</span></span></span>;</div><div class="line">	<span class="rule"><span class="attribute">padding</span>:<span class="value"> <span class="number">0</span></span></span>;</div><div class="line">	<span class="rule"><span class="attribute">background</span>:<span class="value"> <span class="hexcolor">#bbb</span></span></span>;</div><div class="line">	<span class="rule"><span class="attribute">color</span>:<span class="value"> <span class="hexcolor">#222</span></span></span>;</div><div class="line">	<span class="rule"><span class="attribute">border</span>:<span class="value"> <span class="number">1px</span> solid <span class="hexcolor">#fff</span></span></span>;</div><div class="line">	<span class="comment">/*边界亮化*/</span></div><div class="line">	<span class="rule"><span class="attribute">border-bottom-color</span>:<span class="value"> <span class="hexcolor">#000</span></span></span>;</div><div class="line">	<span class="rule"><span class="attribute">border-right-color</span>:<span class="value"> <span class="hexcolor">#000</span></span></span>;</div><div class="line">	<span class="rule"><span class="attribute">cursor</span>:<span class="value"> pointer</span></span>;</div><div class="line">	<span class="rule"><span class="attribute">float</span>:<span class="value"> right</span></span>;</div><div class="line"><span class="rule">}</span></div><div class="line"><span class="class">.best</span><span class="rules">{</span></div><div class="line">	<span class="rule"><span class="attribute">font-size</span>:<span class="value"> <span class="number">20px</span></span></span>;</div><div class="line">	<span class="rule"><span class="attribute">margin</span>:<span class="value"> <span class="number">40px</span> auto <span class="number">10px</span> auto</span></span>;</div><div class="line">	</div><div class="line"><span class="rule">}</span></div><div class="line"><span class="id">#size</span><span class="rules">{</span></div><div class="line">	<span class="rule"><span class="attribute">margin-top</span>:<span class="value"> <span class="number">10px</span></span></span>;</div><div class="line">	<span class="rule"><span class="attribute">width</span>:<span class="value"> <span class="number">200px</span></span></span>;</div><div class="line">	<span class="rule"><span class="attribute">height</span>:<span class="value"> <span class="number">50px</span></span></span>;</div><div class="line">	<span class="rule"><span class="attribute">float</span>:<span class="value"> left</span></span>;</div><div class="line">	<span class="rule"><span class="attribute">margin-left</span>:<span class="value"> <span class="number">20px</span></span></span>;</div><div class="line"><span class="rule">}</span></div></pre></td></tr></table></figure>
+
+<p>　　上面的代码分别复制、黏贴后就可以生成一个基本的网页了（注意我在html中的注释，当心css文件的文件名和位置），但是，我们可以发现里面没有我们上面提到的任何一个逻辑，那就对了，剩下的所有逻辑我们都要通过js文件来完成，从此处我们也可以看到js在前端技术中是多么的强大。<br>　　现在我们还在讨论第一步，好的我们继续。游戏的地图也就是一些大小相同的方格，一个个的生成肯定是不实际的，因为这样很难管理，如此规则的矩形阵列怎么规模生成呢？表格对不对！？是的，表格除了一般用来放文字之外其他特征都很像，那么我们只要不放入文字并设置好大小不就行了？好的，接下来就可以做了。还有我们要注意一点，我们表格的位置也选好了，就是html中id是<code>snakeWrap</code>的模块。
+　　</p>
+<figure class="highlight"><table><tr><td class="gutter"><pre><div class="line">1</div><div class="line">2</div><div class="line">3</div><div class="line">4</div><div class="line">5</div><div class="line">6</div><div class="line">7</div><div class="line">8</div><div class="line">9</div><div class="line">10</div><div class="line">11</div><div class="line">12</div><div class="line">13</div><div class="line">14</div><div class="line">15</div><div class="line">16</div><div class="line">17</div><div class="line">18</div></pre></td><td class="code"><pre><div class="line"><span class="keyword">this</span>.initGrid = <span class="function"><span class="keyword">function</span><span class="params">(target)</span></span>{</div><div class="line">	<span class="keyword">if</span> (<span class="keyword">this</span>.table) {</div><div class="line">		$(target).removeChild(<span class="keyword">this</span>.table);</div><div class="line">	}</div><div class="line">	<span class="keyword">this</span>.table = <span class="built_in">document</span>.createElement(<span class="string">"table"</span>);</div><div class="line">	<span class="keyword">var</span> tbody = <span class="built_in">document</span>.createElement(<span class="string">"tbody"</span>);		</div><div class="line">	<span class="keyword">for</span> (<span class="keyword">var</span> i = <span class="number">0</span>; i &lt; <span class="keyword">this</span>.HEIGHT; i++) {</div><div class="line">		<span class="keyword">var</span> row = <span class="built_in">document</span>.createElement(<span class="string">"tr"</span>);</div><div class="line">		<span class="keyword">for</span> (<span class="keyword">var</span> j = <span class="number">0</span>; j &lt; <span class="keyword">this</span>.WIDTH; j++) {</div><div class="line">			<span class="keyword">var</span> col = <span class="built_in">document</span>.createElement(<span class="string">"td"</span>);</div><div class="line">			row.appendChild(col);</div><div class="line">			<span class="keyword">this</span>.gridElems[i][j] = col;</div><div class="line">		}</div><div class="line">		tbody.appendChild(row);</div><div class="line">	}</div><div class="line">	<span class="keyword">this</span>.table.appendChild(tbody);</div><div class="line">	$(target).appendChild(<span class="keyword">this</span>.table);</div><div class="line">}</div></pre></td></tr></table></figure>
+
+<p>　　上述就是具体代码，其中的<code>this</code>是最后类封装是加上的，现在你可以忽略，把他们都理解为全局的函数或者变量。其中的主要思想就是：<strong>利用DOM技术，按表格标签的结构生成表格结点，再绑定到id为<code>target</code>的元素上，也就是目标位置</strong>。其中开头的代码是在已有表格时限删除现有表格的，此时不用太注意。我们需要注意一下<code>gridElems[i][j]</code>,这是后续控制的关键，这是一个二维数组，下面会给出代码，还有一个<code>$</code>运算符，是一个简化代码的函数，一起给出，看一下就明白了。</p>
+<figure class="highlight"><table><tr><td class="gutter"><pre><div class="line">1</div><div class="line">2</div><div class="line">3</div><div class="line">4</div><div class="line">5</div><div class="line">6</div><div class="line">7</div><div class="line">8</div><div class="line">9</div><div class="line">10</div><div class="line">11</div></pre></td><td class="code"><pre><div class="line"><span class="function"><span class="keyword">function</span> <span class="title">multiArray</span><span class="params">(m, n)</span> </span>{ <span class="comment">//创建m*n的二维数组，我在此理解为矩阵</span></div><div class="line">	<span class="keyword">var</span> arr = <span class="keyword">new</span> <span class="built_in">Array</span>(m);</div><div class="line">	<span class="keyword">for</span> (<span class="keyword">var</span> i = <span class="number">0</span>; i &lt; m; i++) {</div><div class="line">		arr[i] = <span class="keyword">new</span> <span class="built_in">Array</span>(n);</div><div class="line">	}</div><div class="line">	<span class="keyword">return</span> arr;</div><div class="line">}</div><div class="line"></div><div class="line"><span class="function"><span class="keyword">function</span> <span class="title">$</span><span class="params">(id)</span></span>{</div><div class="line">	<span class="keyword">return</span> <span class="built_in">document</span>.getElementById(id);</div><div class="line">}</div></pre></td></tr></table></figure>
+
+<h2 id="第二步">第二步</h2>
+<p>　　我们需要在创建好的地图上绘出基本的游戏元素。玩过的都知道，蛇我们可以简化为一系列连续的色块，而食物我们可以用一个其他颜色的色块代替。我们这里有一个问题，如何控制颜色？首先，有一个基本的思想，就是我们通过设置上述表格的<code>className</code>属性来简化问题，这样只要我们在css中事先设计好颜色就好了。还有一个关键点，就是上面我们刚提到的<code>gridElems</code>，它连接到每个表格元素，所有的设置都要靠它。</p>
+<figure class="highlight"><table><tr><td class="gutter"><pre><div class="line">1</div><div class="line">2</div><div class="line">3</div><div class="line">4</div><div class="line">5</div><div class="line">6</div><div class="line">7</div><div class="line">8</div><div class="line">9</div><div class="line">10</div><div class="line">11</div><div class="line">12</div><div class="line">13</div></pre></td><td class="code"><pre><div class="line"><span class="keyword">this</span>.initSnake = <span class="function"><span class="keyword">function</span> <span class="params">()</span></span>{</div><div class="line">	<span class="keyword">this</span>.talk(<span class="string">"贪吃蛇游戏开始啦~"</span>);</div><div class="line">	$(<span class="string">"score"</span>).innerHTML = <span class="keyword">this</span>.score;</div><div class="line">	<span class="keyword">this</span>.snake_pos = <span class="keyword">new</span> <span class="built_in">Array</span>();</div><div class="line">	<span class="keyword">var</span> snake_head_dot = randdot(<span class="keyword">this</span>.carrier, <span class="number">0</span>, <span class="keyword">this</span>.len - <span class="number">1</span>, <span class="keyword">this</span>.HEIGHT, <span class="built_in">Math</span>.floor(WIDTH/<span class="number">2</span>));</div><div class="line">	<span class="keyword">for</span> (<span class="keyword">var</span> i = <span class="number">0</span>; i &lt; <span class="keyword">this</span>.len; i++) {</div><div class="line">		<span class="keyword">var</span> x = snake_head_dot[<span class="number">0</span>];</div><div class="line">		<span class="keyword">var</span> y = snake_head_dot[<span class="number">1</span>] - i;</div><div class="line">		<span class="keyword">this</span>.snake_pos.push([x, y]);</div><div class="line">		<span class="keyword">this</span>.carrier[x][y] = <span class="string">"cover"</span>;</div><div class="line">		<span class="keyword">this</span>.gridElems[x][y].className = <span class="string">"cover"</span>;</div><div class="line">	}</div><div class="line">}</div></pre></td></tr></table></figure>
+
+<p>　　上述代码也经过了封装，有关<code>this</code>的都是类的属性或者方法，现在只要简单理解为一些函数或者变量就可以了。我们的重点从创建一个Array开始，其用来存蛇的身体每点的坐标，<code>randdot</code>是一个用来生产随机点的函数，下面会给出。<code>carrier</code>也是二维数组，来记录地图的使用情况，其一般与<code>gridElems</code>联动。最后一行就是对表格的控制。最前面的两行是一些交互，现在不用理解。</p>
+<figure class="highlight"><table><tr><td class="gutter"><pre><div class="line">1</div><div class="line">2</div><div class="line">3</div><div class="line">4</div><div class="line">5</div><div class="line">6</div><div class="line">7</div><div class="line">8</div><div class="line">9</div><div class="line">10</div><div class="line">11</div><div class="line">12</div><div class="line">13</div></pre></td><td class="code"><pre><div class="line"><span class="function"><span class="keyword">function</span> <span class="title">randdot</span><span class="params">(carrier, startX, startY, endX, endY)</span></span>{</div><div class="line">	startX = startX || <span class="number">0</span>;</div><div class="line">	startY = startY || <span class="number">0</span>;</div><div class="line">	endX = endX || <span class="keyword">this</span>.HEIGHT;</div><div class="line">	endY = endY || <span class="keyword">this</span>.WIDTH;</div><div class="line">	<span class="keyword">var</span> x = <span class="built_in">Math</span>.floor(<span class="built_in">Math</span>.random() * (endX - startX)) + startX;</div><div class="line">	<span class="keyword">var</span> y = <span class="built_in">Math</span>.floor(<span class="built_in">Math</span>.random() * (endY - startY)) + startY;</div><div class="line">	<span class="keyword">var</span> dot = [x, y];</div><div class="line">	<span class="keyword">if</span> (carrier[x][y]) {</div><div class="line">		<span class="keyword">return</span> randdot(carrier, startX, startY, endX, endY);</div><div class="line">	}</div><div class="line">	<span class="keyword">return</span> dot;</div><div class="line">}</div></pre></td></tr></table></figure>
+
+<p>　　这个函数需要传入<code>carrier</code>来保证不会重复利用，而其他的参数就是起始、结束位置。代码的前几行类似默认参数设置，我试过了直接写在形参的位置，但是chrome好像不认，所以还是按照原代码写了。添加食物我们可以结合后续要添加的各种要素统一创建一个函数，但是基本思想和上面是一样的。</p>
+<figure class="highlight"><table><tr><td class="gutter"><pre><div class="line">1</div><div class="line">2</div><div class="line">3</div><div class="line">4</div><div class="line">5</div></pre></td><td class="code"><pre><div class="line"><span class="keyword">this</span>.addObject = <span class="function"><span class="keyword">function</span><span class="params">(type)</span></span>{</div><div class="line">	<span class="keyword">var</span> pos = randdot(<span class="keyword">this</span>.carrier);</div><div class="line">	<span class="keyword">this</span>.carrier[pos[<span class="number">0</span>]][pos[<span class="number">1</span>]] = type;</div><div class="line">	<span class="keyword">this</span>.gridElems[pos[<span class="number">0</span>]][pos[<span class="number">1</span>]].className = type;</div><div class="line">}</div></pre></td></tr></table></figure>
+
+<p>　　可见我们用了<code>type</code>来指代要添加的名称，此名称和css相关控制显示，然后其他的就和上面的一样了，联动的修改carrier和gridElems。到这里第二点的逻辑就实现了。</p>
+
+      
+    </div>
+    <footer class="article-footer">
+      
+      
+    </footer>
+  </div>
+  
+    
+<nav id="article-nav">
+  
+  
+    <a href="/2014/11/20/2014-11-20-110724/" id="article-nav-older" class="article-nav-link-wrap">
+      <div class="article-nav-title">正则表达式&lt;二&gt;</div>
+      <strong class="article-nav-caption">&gt;</strong>
+    </a>
+  
+</nav>
+
+  
+</article>
+
+
+<div class="share">
+	<!-- JiaThis Button BEGIN -->
+	<div class="jiathis_style">
+		<span class="jiathis_txt">分享到：</span>
+		<a class="jiathis_button_tsina"></a>
+		<a class="jiathis_button_cqq"></a>
+		<a class="jiathis_button_douban"></a>
+		<a class="jiathis_button_weixin"></a>
+		<a class="jiathis_button_tumblr"></a>
+		<a href="http://www.jiathis.com/share" class="jiathis jiathis_txt jtico jtico_jiathis" target="_blank"></a>
+	</div>
+	<script type="text/javascript" src="http://v3.jiathis.com/code/jia.js?uid=1405949716054953" charset="utf-8"></script>
+	<!-- JiaThis Button END -->
+</div>
+
+
+
+<div class="duoshuo">
+	<!-- 多说评论框 start -->
+	<div class="ds-thread" data-thread-key="2014-12-02-201531" data-title="HTML+CSS+JS实现的贪吃蛇游戏&lt;一&gt;" data-url="http://yoursite.com/2014/12/02/2014-12-02-201531/"></div>
+	<!-- 多说评论框 end -->
+	<!-- 多说公共JS代码 start (一个网页只需插入一次) -->
+	<script type="text/javascript">
+	var duoshuoQuery = {short_name:"whjgithub"};
+	(function() {
+		var ds = document.createElement('script');
+		ds.type = 'text/javascript';ds.async = true;
+		ds.src = (document.location.protocol == 'https:' ? 'https:' : 'http:') + '//static.duoshuo.com/embed.js';
+		ds.charset = 'UTF-8';
+		(document.getElementsByTagName('head')[0] 
+		 || document.getElementsByTagName('body')[0]).appendChild(ds);
+	})();
+	</script>
+	<!-- 多说公共JS代码 end -->
+</div>
+
+
+
+
+      <footer id="footer">
+  <div class="outer">
+    <div id="footer-info">
+    	<div class="footer-left">
+    		&copy; 2014 WHJ
+    	</div>
+      	<div class="footer-right">
+      		<a href="http://hexo.io/" target="_blank">Hexo</a>  Theme <a href="https://github.com/litten/hexo-theme-yilia" target="_blank">Yilia</a> by Litten
+      	</div>
+    </div>
+  </div>
+</footer>
+    </div>
+    
+  <link rel="stylesheet" href="/fancybox/jquery.fancybox.css" type="text/css">
+
+  <script src="/fancybox/jquery.fancybox.pack.js" type="text/javascript"></script>
+
+  <script src="/js/main.js" type="text/javascript"></script>
+
+
+  </div>
+</body>
+</html>
