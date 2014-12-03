@@ -106,7 +106,7 @@
 				
 				<section class="switch-part switch-part2">
 					<div class="widget tagcloud">
-						<a href="/tags/javascript/" style="font-size: 10.00px;">javascript</a><a href="/tags/python/" style="font-size: 20.00px;">python</a><a href="/tags/原创/" style="font-size: 10.00px;">原创</a><a href="/tags/笔记/" style="font-size: 20.00px;">笔记</a><a href="/tags/随笔/" style="font-size: 10.00px;">随笔</a>
+						<a href="/tags/javascript/" style="font-size: 15.00px;">javascript</a><a href="/tags/python/" style="font-size: 20.00px;">python</a><a href="/tags/原创/" style="font-size: 20.00px;">原创</a><a href="/tags/笔记/" style="font-size: 15.00px;">笔记</a><a href="/tags/随笔/" style="font-size: 10.00px;">随笔</a>
 					</div>
 				</section>
 				
@@ -172,7 +172,7 @@
 </a>
       
       
-  <ul class="article-tag-list"><li class="article-tag-list-item"><a class="article-tag-list-link" href="/tags/javascript/">javascript</a></li><li class="article-tag-list-item"><a class="article-tag-list-link" href="/tags/笔记/">笔记</a></li></ul>
+  <ul class="article-tag-list"><li class="article-tag-list-item"><a class="article-tag-list-link" href="/tags/javascript/">javascript</a></li><li class="article-tag-list-item"><a class="article-tag-list-link" href="/tags/原创/">原创</a></li></ul>
 
     </div>
   
@@ -228,7 +228,7 @@
 <p>　　这个函数需要传入<code>carrier</code>来保证不会重复利用，而其他的参数就是起始、结束位置。代码的前几行类似默认参数设置，我试过了直接写在形参的位置，但是chrome好像不认，所以还是按照原代码写了。添加食物我们可以结合后续要添加的各种要素统一创建一个函数，但是基本思想和上面是一样的。</p>
 <figure class="highlight"><table><tr><td class="gutter"><pre><div class="line">1</div><div class="line">2</div><div class="line">3</div><div class="line">4</div><div class="line">5</div></pre></td><td class="code"><pre><div class="line"><span class="keyword">this</span>.addObject = <span class="function"><span class="keyword">function</span><span class="params">(type)</span></span>{</div><div class="line">	<span class="keyword">var</span> pos = randdot(<span class="keyword">this</span>.carrier);</div><div class="line">	<span class="keyword">this</span>.carrier[pos[<span class="number">0</span>]][pos[<span class="number">1</span>]] = type;</div><div class="line">	<span class="keyword">this</span>.gridElems[pos[<span class="number">0</span>]][pos[<span class="number">1</span>]].className = type;</div><div class="line">}</div></pre></td></tr></table></figure>
 
-<p>　　可见我们用了<code>type</code>来指代要添加的名称，此名称和css相关控制显示，然后其他的就和上面的一样了，联动的修改carrier和gridElems。到这里第二点的逻辑就实现了。</p>
+<p>　　可见我们用了<code>type</code>来指代要添加的名称，此名称和css相关控制显示，然后其他的就和上面的一样了，联动的修改carrier和gridElems。到这里第二点的逻辑就实现了。<br>　　好了，今天先讲到这里。<strong>转载请加上本文链接和作者哦</strong>。</p>
 
       
     </div>
@@ -241,9 +241,18 @@
     
 <nav id="article-nav">
   
+    <a href="/2014/12/03/2014-12-03-102647/" id="article-nav-newer" class="article-nav-link-wrap">
+      <strong class="article-nav-caption">&lt;</strong>
+      <div class="article-nav-title">
+        
+          HTML+CSS+JS实现的贪吃蛇游戏&lt;二&gt;（完）
+        
+      </div>
+    </a>
+  
   
     <a href="/2014/11/20/2014-11-20-110724/" id="article-nav-older" class="article-nav-link-wrap">
-      <div class="article-nav-title">正则表达式&lt;二&gt;</div>
+      <div class="article-nav-title">正则表达式&lt;二&gt;（完）</div>
       <strong class="article-nav-caption">&gt;</strong>
     </a>
   
