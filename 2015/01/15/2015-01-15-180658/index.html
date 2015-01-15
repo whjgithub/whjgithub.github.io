@@ -1,0 +1,305 @@
+<!DOCTYPE html>
+<html>
+<head>
+  <meta charset="utf-8">
+  
+  <title>红黑树&lt;一&gt; | WHJ&#39;s blog</title>
+  <meta name="viewport" content="width=device-width, initial-scale=1, maximum-scale=1">
+  <meta name="description" content="好久没有写博客了。除了一部分的时间在做实验室的东西，其他的时间都在研究数据结构。每天的书桌上都放着两本砖头一般厚的书：一本是经典的算法导论，还有一本是带有一些c++描述的算法与数据结构。算法导论以前就看过一些，总体而言偏重于数学理论和思维逻辑，每个算式都是有理有据的推导，结论也十分的明确，但是推导的过程比较繁复，实现方面也是用的伪代码。照理说伪代码是最好的，可以翻译成各种语言的代码，但是同时它">
+<meta property="og:type" content="article">
+<meta property="og:title" content="红黑树<一>">
+<meta property="og:url" content="http://yoursite.com/2015/01/15/2015-01-15-180658/">
+<meta property="og:site_name" content="WHJ's blog">
+<meta property="og:description" content="好久没有写博客了。除了一部分的时间在做实验室的东西，其他的时间都在研究数据结构。每天的书桌上都放着两本砖头一般厚的书：一本是经典的算法导论，还有一本是带有一些c++描述的算法与数据结构。算法导论以前就看过一些，总体而言偏重于数学理论和思维逻辑，每个算式都是有理有据的推导，结论也十分的明确，但是推导的过程比较繁复，实现方面也是用的伪代码。照理说伪代码是最好的，可以翻译成各种语言的代码，但是同时它">
+<meta name="twitter:card" content="summary">
+<meta name="twitter:title" content="红黑树<一>">
+<meta name="twitter:description" content="好久没有写博客了。除了一部分的时间在做实验室的东西，其他的时间都在研究数据结构。每天的书桌上都放着两本砖头一般厚的书：一本是经典的算法导论，还有一本是带有一些c++描述的算法与数据结构。算法导论以前就看过一些，总体而言偏重于数学理论和思维逻辑，每个算式都是有理有据的推导，结论也十分的明确，但是推导的过程比较繁复，实现方面也是用的伪代码。照理说伪代码是最好的，可以翻译成各种语言的代码，但是同时它">
+
+  
+    <link rel="alternative" href="/atom.xml" title="WHJ&#39;s blog" type="application/atom+xml">
+  
+  
+    <link rel="icon" href="/favicon.png">
+  
+  <link rel="stylesheet" href="/css/style.css" type="text/css">
+
+  <script src="http://libs.baidu.com/jquery/1.9.0/jquery.js"></script>
+</head>
+<body>
+  <div id="container">
+    <div class="left-col">
+    <div class="overlay"></div>
+<div class="intrude-less">
+	<header id="header" class="inner">
+		<div class="profilepic">
+			<img src="http://whj-img.qiniudn.com/2014-11-03_145609.png">
+		</div>
+
+		<hgroup>
+		  <h1 class="header-author"><a href="/">WHJ</a></h1>
+		</hgroup>
+
+		
+		<p class="header-subtitle">WHJ&#39;s Heroic Joker</p>
+		
+
+		
+			<div class="switch-btn">
+				<div class="icon">
+					<div class="icon-ctn">
+						<div class="icon-wrap icon-house" data-idx="0">
+							<div class="birdhouse"></div>
+							<div class="birdhouse_holes"></div>
+						</div>
+						<div class="icon-wrap icon-ribbon hide" data-idx="1">
+							<div class="ribbon"></div>
+						</div>
+						
+						<div class="icon-wrap icon-link hide" data-idx="2">
+							<div class="loopback_l"></div>
+							<div class="loopback_r"></div>
+						</div>
+						
+						
+					</div>
+					
+				</div>
+				<div class="tips-box hide">
+					<div class="tips-arrow"></div>
+					<ul class="tips-inner">
+						<li>菜单</li>
+						<li>标签</li>
+						
+						<li>友情链接</li>
+						
+						
+					</ul>
+				</div>
+			</div>
+		
+
+		<div class="switch-area">
+			<div class="switch-wrap">
+				<section class="switch-part switch-part1">
+					<nav class="header-menu">
+						<ul>
+						
+							<li><a href="/">主页</a></li>
+				        
+							<li><a href="/archives">所有文章</a></li>
+				        
+							<li><a href="/about">关于作者</a></li>
+				        
+						</ul>
+					</nav>
+					<nav class="header-nav">
+						<div class="social">
+							
+								<a class="github" target="_blank" href="https://github.com/whjgithub" title="github">github</a>
+					        
+								<a class="rss" target="_blank" href="/atom.xml" title="rss">rss</a>
+					        
+						</div>
+					</nav>
+				</section>
+				
+				
+				<section class="switch-part switch-part2">
+					<div class="widget tagcloud">
+						<a href="/tags/javascript/" style="font-size: 15.00px;">javascript</a><a href="/tags/python/" style="font-size: 15.00px;">python</a><a href="/tags/原创/" style="font-size: 15.00px;">原创</a><a href="/tags/数据结构/" style="font-size: 10.00px;">数据结构</a><a href="/tags/笔记/" style="font-size: 20.00px;">笔记</a><a href="/tags/随笔/" style="font-size: 10.00px;">随笔</a>
+					</div>
+				</section>
+				
+				
+				
+				<section class="switch-part switch-part3">
+					
+			          <a target="_blank" class="main-nav-link switch-friends-link" href="http://chenpengdsp.com">CP师兄的博客</a>
+			        
+				</section>
+				
+
+				
+			</div>
+		</div>
+	</header>				
+</div>
+    </div>
+    <div class="mid-col">
+      <nav id="mobile-nav">
+  	<div class="overlay"></div>
+	<div class="intrude-less">
+		<header id="header" class="inner">
+			<div class="profilepic">
+				<img src="http://whj-img.qiniudn.com/2014-11-03_145609.png">
+			</div>
+
+			<hgroup>
+			  <h1 class="header-author"><a href="/">WHJ</a></h1>
+			</hgroup>
+			
+			<p class="header-subtitle">WHJ&#39;s Heroic Joker</p>
+			
+			<nav class="header-menu">
+				<ul>
+				
+					<li><a href="/">主页</a></li>
+		        
+					<li><a href="/archives">所有文章</a></li>
+		        
+					<li><a href="/about">关于作者</a></li>
+		        
+		        <div class="clearfix"></div>
+				</ul>
+			</nav>
+			<nav class="header-nav">
+				<div class="social">
+					
+						<a class="github" target="_blank" href="https://github.com/whjgithub" title="github">github</a>
+			        
+						<a class="rss" target="_blank" href="/atom.xml" title="rss">rss</a>
+			        
+				</div>
+			</nav>
+		</header>				
+	</div>
+</nav>
+      <article id="post-2015-01-15-180658" class="article article-type-post" itemscope itemprop="blogPost">
+  
+    <div class="article-meta">
+      <a href="/2015/01/15/2015-01-15-180658/" class="article-date">
+  	<time datetime="2015-01-15T10:06:58.000Z" itemprop="datePublished">Jan 15 2015</time>
+</a>
+      
+      
+  <ul class="article-tag-list"><li class="article-tag-list-item"><a class="article-tag-list-link" href="/tags/数据结构/">数据结构</a></li><li class="article-tag-list-item"><a class="article-tag-list-link" href="/tags/笔记/">笔记</a></li></ul>
+
+    </div>
+  
+  <div class="article-inner">
+    
+      <input type="hidden" class="isFancy" />
+    
+    
+      <header class="article-header">
+        
+  
+    <h1 class="article-title" itemprop="name">
+      红黑树&lt;一&gt;
+    </h1>
+  
+
+      </header>
+    
+    <div class="article-entry" itemprop="articleBody">
+      
+        <p>　　好久没有写博客了。除了一部分的时间在做实验室的东西，其他的时间都在研究数据结构。每天的书桌上都放着两本砖头一般厚的书：一本是经典的算法导论，还有一本是带有一些c++描述的算法与数据结构。算法导论以前就看过一些，总体而言偏重于数学理论和思维逻辑，每个算式都是有理有据的推导，结论也十分的明确，但是推导的过程比较繁复，实现方面也是用的伪代码。照理说伪代码是最好的，可以翻译成各种语言的代码，但是同时它也是最没有针对性的，可以说不是任何一种代码，这时，后者就可以弥补这一方面的缺陷。<br>　　通过最近一段时间的学习，数据结构的内容已经完成过半。在学习的过程中，红黑树部分可以说是碰到的第一个让人有点喘不过气的部分，所以在学习的同时希望记录下来，以供后续阶段的复习回顾。<br><a id="more"></a>
+　　</p>
+<h2 id="红黑树的介绍">红黑树的介绍</h2>
+<p>　　算法导论对R-B Tree的介绍：<br>　　红黑树，一种二叉查找树，它在每个结点上增加一个存储位表示结点的<strong>颜色</strong>，可以是Red或Black。通过对任何一条从根到叶子的简单路径上各个结点的颜色进行约束，红黑树确保没有一条路径会比其他路径长出2倍，因而是接近<strong>平衡的</strong>。<br>　　前面说了，红黑树是一种二叉查找树，既然是二叉查找树，那么它必满足二叉查找树的一般性质，所以在开始之前也有必要了解下二叉查找树的一般性质。二叉查找树满足下列性质：</p>
+<blockquote>
+<p>1）若任意节点的左子树不空，则左子树上所有结点的值均小于它的根结点的值;<br>2）若任意节点的右子树不空，则右子树上所有结点的值均大于它的根结点的值;<br>3）任意节点的左、右子树也分别为二叉查找树;<br>4）没有键值相等的节点（no duplicate nodes）。</p>
+</blockquote>
+<p>　　所以在二叉查找树中执行查找、插入、删除等操作时，其时间复杂度满足下面的特点：（1）正比于O(lgn)（2）最坏可达到n。上述（1）特点是因为一棵随机构造的二叉查找树的高度为O(lgn)，而执行查找、插入、删除等操作的时间复杂度是和树高有关系的。（2）特点是由于构造时出现的特殊情况，比如一个从小到大顺序输入的数组，这时二叉查找树相当于一个n长链表，其高度为n，所以复杂度也是n。红黑树由于加上了一些限制条件，可以保证在最坏的情况下，上述操作的时间复杂度也保持在O(lgn)。那么下面我们就要看一看红黑树到底加了什么限制条件来保证这么好的性质。<br>　　一般来说，满足了下面的条件，我们才称其为红黑树：</p>
+<blockquote>
+<p>1）每个结点要么是红的，要么是黑的。<br>2）根结点是黑的。<br>3）每个叶结点，即空结点（NIL）是黑的。<br>4）如果一个结点是红的，那么它的俩个儿子都是黑的。<br>5）对每个结点，从该结点到其子孙结点的所有路径上包含相同数目的黑结点。</p>
+</blockquote>
+<p><img src="" alt="红黑树构造图"><br>　　上文中我们所说的<strong>叶结点</strong>或<strong>NULL结点</strong>，如上图所示，它不包含数据而只充当树在此结束的指示，这些节点在绘图中经常被省略。
+　　　　</p>
+<h2 id="红黑树的旋转">红黑树的旋转</h2>
+<p>　　当对红黑树执行插入和删除等操作时，对树作修改可能会破坏红黑树的性质。为了继续保持红黑树的性质，可以通过对结点进行重新着色，以及对树进行相关的旋转操作，即通过修改树中某些结点的颜色及指针结构，来达到对红黑树进行插入或删除结点等操作后继续保持它的性质或平衡的目的。<br>　　树的旋转分为左旋和右旋，下面借助图来介绍一下左旋和右旋这两种操作。首先，介绍左旋操作。<br><img src="" alt="红黑树的左旋"><br>　　如上图所示，当在某个结点pivot上，做左旋操作时，我们假设它的右孩子Y不是NIL，pivot可以为任何不是NIL的结点。左旋使Y成为该子树的新根，而Y的左孩子b则成为pivot的右孩子。</p>
+<figure class="highlight"><table><tr><td class="gutter"><pre><div class="line">1</div><div class="line">2</div><div class="line">3</div><div class="line">4</div><div class="line">5</div><div class="line">6</div><div class="line">7</div><div class="line">8</div><div class="line">9</div><div class="line">10</div><div class="line">11</div><div class="line">12</div><div class="line">13</div></pre></td><td class="code"><pre><div class="line"><span class="type">LeftRoate</span>(<span class="type">T</span>, x)  </div><div class="line">	y ← x.<span class="keyword">right</span>                    <span class="comment">//y指向x的右孩子  </span></div><div class="line">	x.<span class="keyword">right</span> ← y.<span class="keyword">left</span>               <span class="comment">//y的左孩子成为x的右孩子  </span></div><div class="line">	<span class="keyword">if</span> y.<span class="keyword">left</span> ≠ <span class="type">T</span>.<span class="built_in">nil</span>              <span class="comment">//y的左孩子不为空，则将其父设置为x</span></div><div class="line">    	y.<span class="keyword">left</span>.p ← x      </div><div class="line">	y.p ← x.p                      <span class="comment">//y代替x成为该子树的根结点  </span></div><div class="line">	<span class="keyword">if</span> x.p = <span class="type">T</span>.<span class="built_in">nil</span>                 <span class="comment">//若x为根节点将y设置为根节点</span></div><div class="line">    	<span class="type">T</span>.root ← y  </div><div class="line">	elseif x = x.p.<span class="keyword">left</span>            <span class="comment">//y替换x后将其与上层结点链接，区分x是x.p的左还是右孩子</span></div><div class="line">    	x.p.<span class="keyword">left</span> ← y  </div><div class="line">	<span class="keyword">else</span> x.p.<span class="keyword">right</span> ← y   </div><div class="line">	y.<span class="keyword">left</span> ← x                 <span class="comment">//x作为y的左孩子  </span></div><div class="line">	x.p ← y</div></pre></td></tr></table></figure>
+
+<p>　　上述程序中，x代表结点类，其数据域中应该有left（左子指针）、right（右子指针）、p（父结点指针）、key（键值）。<br>　　下面要介绍的是右旋，其实看示意图我们就可以看出，右旋和左旋是一个对称的关系。<br><img src="" alt="红黑树的右旋"><br>　　如上图所示，当在某个结点pivot上，做右旋操作时，我们假设它的左孩子y不是NIL，pivot可以为任何不是NIL的结点。左旋使Y成为该子树的新根，而Y的右孩子c则成为pivot的左孩子。</p>
+<figure class="highlight"><table><tr><td class="gutter"><pre><div class="line">1</div><div class="line">2</div><div class="line">3</div><div class="line">4</div><div class="line">5</div><div class="line">6</div><div class="line">7</div><div class="line">8</div><div class="line">9</div><div class="line">10</div><div class="line">11</div><div class="line">12</div><div class="line">13</div></pre></td><td class="code"><pre><div class="line"><span class="type">RightRoate</span>(<span class="type">T</span>, x)  </div><div class="line">	y ← x.<span class="keyword">left</span>                    <span class="comment">//y指向x的左孩子  </span></div><div class="line">	x.<span class="keyword">left</span> ← y.<span class="keyword">right</span>               <span class="comment">//y的右孩子成为x的左孩子  </span></div><div class="line">	<span class="keyword">if</span> y.<span class="keyword">right</span> ≠ <span class="type">T</span>.<span class="built_in">nil</span>              <span class="comment">//y的右孩子不为空，则将其父设置为x</span></div><div class="line">    	y.<span class="keyword">left</span>.p ← x      </div><div class="line">	y.p ← x.p                      <span class="comment">//y代替x成为该子树的根结点  </span></div><div class="line">	<span class="keyword">if</span> x.p = <span class="type">T</span>.<span class="built_in">nil</span>                 <span class="comment">//若x为根节点将y设置为根节点</span></div><div class="line">    	<span class="type">T</span>.root ← y  </div><div class="line">	elseif x = x.p.<span class="keyword">left</span>            <span class="comment">//y替换x后将其与上层结点链接，区分x是x.p的左还是右孩子</span></div><div class="line">    	x.p.<span class="keyword">left</span> ← y  </div><div class="line">	<span class="keyword">else</span> x.p.<span class="keyword">right</span> ← y   </div><div class="line">	y.<span class="keyword">right</span> ← x                 <span class="comment">//x作为y的右孩子  </span></div><div class="line">	x.p ← y</div></pre></td></tr></table></figure>
+
+<p>　　我们从上面的解释上可以看到：树在经过左旋右旋之后，二叉搜索的性质保持不变，但红黑性质则被破坏了，所以，红黑树插入和删除数据后，需要结合旋转与颜色重涂来重新恢复树的红黑性质。</p>
+<p>上述的内容参考了<a href="http://blog.csdn.net/v_JULY_v/article/details/6105630" target="_blank" rel="external">http://blog.csdn.net/v_JULY_v/article/details/6105630</a></p>
+<p>版权：本文采用以下协议进行授权，<a href="http://creativecommons.org/licenses/by-nc-nd/3.0/deed.zh" target="_blank" rel="external">自由转载 - 非商用 - 非衍生 - 保持署名 | Creative Commons BY-NC-ND 3.0</a>，转载请注明作者及出处。</p>
+
+      
+    </div>
+    <footer class="article-footer">
+      
+      
+    </footer>
+  </div>
+  
+    
+<nav id="article-nav">
+  
+  
+    <a href="/2014/12/05/2014-12-05-202747/" id="article-nav-older" class="article-nav-link-wrap">
+      <div class="article-nav-title">javascript中的bind</div>
+      <strong class="article-nav-caption">&gt;</strong>
+    </a>
+  
+</nav>
+
+  
+</article>
+
+
+<div class="share">
+	<!-- JiaThis Button BEGIN -->
+	<div class="jiathis_style">
+		<span class="jiathis_txt">分享到：</span>
+		<a class="jiathis_button_tsina"></a>
+		<a class="jiathis_button_cqq"></a>
+		<a class="jiathis_button_douban"></a>
+		<a class="jiathis_button_weixin"></a>
+		<a class="jiathis_button_tumblr"></a>
+		<a href="http://www.jiathis.com/share" class="jiathis jiathis_txt jtico jtico_jiathis" target="_blank"></a>
+	</div>
+	<script type="text/javascript" src="http://v3.jiathis.com/code/jia.js?uid=1405949716054953" charset="utf-8"></script>
+	<!-- JiaThis Button END -->
+</div>
+
+
+
+<div class="duoshuo">
+	<!-- 多说评论框 start -->
+	<div class="ds-thread" data-thread-key="2015-01-15-180658" data-title="红黑树&lt;一&gt;" data-url="http://yoursite.com/2015/01/15/2015-01-15-180658/"></div>
+	<!-- 多说评论框 end -->
+	<!-- 多说公共JS代码 start (一个网页只需插入一次) -->
+	<script type="text/javascript">
+	var duoshuoQuery = {short_name:"whjgithub"};
+	(function() {
+		var ds = document.createElement('script');
+		ds.type = 'text/javascript';ds.async = true;
+		ds.src = (document.location.protocol == 'https:' ? 'https:' : 'http:') + '//static.duoshuo.com/embed.js';
+		ds.charset = 'UTF-8';
+		(document.getElementsByTagName('head')[0] 
+		 || document.getElementsByTagName('body')[0]).appendChild(ds);
+	})();
+	</script>
+	<!-- 多说公共JS代码 end -->
+</div>
+
+
+
+
+      <footer id="footer">
+  <div class="outer">
+    <div id="footer-info">
+    	<div class="footer-left">
+    		&copy; 2015 WHJ
+    	</div>
+      	<div class="footer-right">
+      		<a href="http://hexo.io/" target="_blank">Hexo</a>  Theme <a href="https://github.com/litten/hexo-theme-yilia" target="_blank">Yilia</a> by Litten
+      	</div>
+    </div>
+  </div>
+</footer>
+    </div>
+    
+  <link rel="stylesheet" href="/fancybox/jquery.fancybox.css" type="text/css">
+
+  <script src="/fancybox/jquery.fancybox.pack.js" type="text/javascript"></script>
+
+  <script src="/js/main.js" type="text/javascript"></script>
+
+
+  </div>
+</body>
+</html>

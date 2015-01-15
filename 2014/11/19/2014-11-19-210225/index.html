@@ -108,7 +108,7 @@
 				
 				<section class="switch-part switch-part2">
 					<div class="widget tagcloud">
-						<a href="/tags/javascript/" style="font-size: 20.00px;">javascript</a><a href="/tags/python/" style="font-size: 20.00px;">python</a><a href="/tags/原创/" style="font-size: 20.00px;">原创</a><a href="/tags/笔记/" style="font-size: 20.00px;">笔记</a><a href="/tags/随笔/" style="font-size: 10.00px;">随笔</a>
+						<a href="/tags/javascript/" style="font-size: 15.00px;">javascript</a><a href="/tags/python/" style="font-size: 15.00px;">python</a><a href="/tags/原创/" style="font-size: 15.00px;">原创</a><a href="/tags/数据结构/" style="font-size: 10.00px;">数据结构</a><a href="/tags/笔记/" style="font-size: 20.00px;">笔记</a><a href="/tags/随笔/" style="font-size: 10.00px;">随笔</a>
 					</div>
 				</section>
 				
@@ -203,8 +203,7 @@
 <h2 id="几点说明">几点说明</h2>
 <p><strong>1.匹配的贪婪与非贪婪模式</strong><br>　　Python里的匹配模式默认是贪婪的（在少数语言里也可能是默认非贪婪）。贪婪的意思就是：总是尝试匹配尽可能多的字符；非贪婪的则相反，总是尝试匹配尽可能少的字符。如何来控制呢？方法就是使用“非贪婪”操作符<code>?</code>，其可以使用在<code>&quot;*&quot;,&quot;+&quot;,&quot;?&quot;</code>后面来终止贪婪模式。举例来说：正则表达式<code>ab*</code>如果用于查找<code>abbbc</code>，将找到<code>abbb</code>。而如果使用非贪婪的数量词<code>ab*?</code>，将找到<code>a</code>。</p>
 <p><strong>2.符号的转义</strong><br>　　与大多数编程语言相同，正则表达式里使用<code>\</code>作为转义字符，这就可能造成反斜杠困扰。假如你需要匹配文本中的字符“\”，那么使用编程语言表示的正则表达式里将需要<strong>4个反斜杠</strong><code>\\\\</code>：前两个和后两个分别用于在编程语言里转义成反斜杠，转换成两个反斜杠后再在正则表达式里转义成一个反斜杠。Python里的raw字符串很好地解决了这个问题，这个例子中的正则表达式可以使用<code>r&quot;\\&quot;</code>表示。同样，匹配一个数字的<code>&quot;\\d&quot;</code>可以写成<code>r&quot;\d&quot;</code>。有了raw字符串，你再也不用担心是不是漏写了反斜杠，写出来的表达式也更直观。</p>
-<p><strong>3.匹配模式</strong><br>　　正则表达式提供了一些简单实用的匹配模式，比如忽略大小写、多行匹配等，这部分内容将在后续一起介绍。
-　　</p>
+<p><strong>3.匹配模式</strong><br>　　正则表达式提供了一些简单实用的匹配模式，比如忽略大小写、多行匹配等，这部分内容将在后续一起介绍。<br>　　<br>版权：本文采用以下协议进行授权，<a href="http://creativecommons.org/licenses/by-nc-nd/3.0/deed.zh" target="_blank" rel="external">自由转载 - 非商用 - 非衍生 - 保持署名 | Creative Commons BY-NC-ND 3.0</a>，转载请注明作者及出处。</p>
 
       
     </div>
@@ -281,7 +280,7 @@
   <div class="outer">
     <div id="footer-info">
     	<div class="footer-left">
-    		&copy; 2014 WHJ
+    		&copy; 2015 WHJ
     	</div>
       	<div class="footer-right">
       		<a href="http://hexo.io/" target="_blank">Hexo</a>  Theme <a href="https://github.com/litten/hexo-theme-yilia" target="_blank">Yilia</a> by Litten
