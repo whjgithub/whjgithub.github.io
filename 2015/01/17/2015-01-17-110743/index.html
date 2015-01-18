@@ -1,0 +1,309 @@
+<!DOCTYPE html>
+<html>
+<head>
+  <meta charset="utf-8">
+  
+  <title>红黑树&lt;二&gt; | WHJ&#39;s blog</title>
+  <meta name="viewport" content="width=device-width, initial-scale=1, maximum-scale=1">
+  <meta name="description" content="在&lt;一&gt;中，我们已经阐释了红黑树的基本概念和特性，明白了其在基本操作上能始终保持O(lgn)的复杂度，都归功于在操作的同时能维持其红黑树的特性。我们还提到了红黑树的旋转，它是在对红黑树进行了修改之后进行特性维持的关键步骤。那么下面我们就要来看看对红黑树进行了插入与删除之后，具体如何维持红黑树的特性。">
+<meta property="og:type" content="article">
+<meta property="og:title" content="红黑树<二>">
+<meta property="og:url" content="http://yoursite.com/2015/01/17/2015-01-17-110743/">
+<meta property="og:site_name" content="WHJ's blog">
+<meta property="og:description" content="在&lt;一&gt;中，我们已经阐释了红黑树的基本概念和特性，明白了其在基本操作上能始终保持O(lgn)的复杂度，都归功于在操作的同时能维持其红黑树的特性。我们还提到了红黑树的旋转，它是在对红黑树进行了修改之后进行特性维持的关键步骤。那么下面我们就要来看看对红黑树进行了插入与删除之后，具体如何维持红黑树的特性。">
+<meta property="og:image" content="http://whj-img.qiniudn.com/插入结点之后.png">
+<meta property="og:image" content="http://whj-img.qiniudn.com/情况1修复后.png">
+<meta property="og:image" content="http://whj-img.qiniudn.com/从情况2变成情况3.png">
+<meta property="og:image" content="http://whj-img.qiniudn.com/情况3修复后.png">
+<meta name="twitter:card" content="summary">
+<meta name="twitter:title" content="红黑树<二>">
+<meta name="twitter:description" content="在&lt;一&gt;中，我们已经阐释了红黑树的基本概念和特性，明白了其在基本操作上能始终保持O(lgn)的复杂度，都归功于在操作的同时能维持其红黑树的特性。我们还提到了红黑树的旋转，它是在对红黑树进行了修改之后进行特性维持的关键步骤。那么下面我们就要来看看对红黑树进行了插入与删除之后，具体如何维持红黑树的特性。">
+
+  
+    <link rel="alternative" href="/atom.xml" title="WHJ&#39;s blog" type="application/atom+xml">
+  
+  
+    <link rel="icon" href="/favicon.png">
+  
+  <link rel="stylesheet" href="/css/style.css" type="text/css">
+
+  <script src="http://libs.baidu.com/jquery/1.9.0/jquery.js"></script>
+</head>
+<body>
+  <div id="container">
+    <div class="left-col">
+    <div class="overlay"></div>
+<div class="intrude-less">
+	<header id="header" class="inner">
+		<div class="profilepic">
+			<img src="http://whj-img.qiniudn.com/2014-11-03_145609.png">
+		</div>
+
+		<hgroup>
+		  <h1 class="header-author"><a href="/">WHJ</a></h1>
+		</hgroup>
+
+		
+		<p class="header-subtitle">WHJ&#39;s Heroic Joker</p>
+		
+
+		
+			<div class="switch-btn">
+				<div class="icon">
+					<div class="icon-ctn">
+						<div class="icon-wrap icon-house" data-idx="0">
+							<div class="birdhouse"></div>
+							<div class="birdhouse_holes"></div>
+						</div>
+						<div class="icon-wrap icon-ribbon hide" data-idx="1">
+							<div class="ribbon"></div>
+						</div>
+						
+						<div class="icon-wrap icon-link hide" data-idx="2">
+							<div class="loopback_l"></div>
+							<div class="loopback_r"></div>
+						</div>
+						
+						
+					</div>
+					
+				</div>
+				<div class="tips-box hide">
+					<div class="tips-arrow"></div>
+					<ul class="tips-inner">
+						<li>菜单</li>
+						<li>标签</li>
+						
+						<li>友情链接</li>
+						
+						
+					</ul>
+				</div>
+			</div>
+		
+
+		<div class="switch-area">
+			<div class="switch-wrap">
+				<section class="switch-part switch-part1">
+					<nav class="header-menu">
+						<ul>
+						
+							<li><a href="/">主页</a></li>
+				        
+							<li><a href="/archives">所有文章</a></li>
+				        
+							<li><a href="/about">关于作者</a></li>
+				        
+						</ul>
+					</nav>
+					<nav class="header-nav">
+						<div class="social">
+							
+								<a class="github" target="_blank" href="https://github.com/whjgithub" title="github">github</a>
+					        
+								<a class="rss" target="_blank" href="/atom.xml" title="rss">rss</a>
+					        
+						</div>
+					</nav>
+				</section>
+				
+				
+				<section class="switch-part switch-part2">
+					<div class="widget tagcloud">
+						<a href="/tags/javascript/" style="font-size: 16.67px;">javascript</a><a href="/tags/python/" style="font-size: 16.67px;">python</a><a href="/tags/原创/" style="font-size: 16.67px;">原创</a><a href="/tags/数据结构/" style="font-size: 13.33px;">数据结构</a><a href="/tags/笔记/" style="font-size: 20.00px;">笔记</a><a href="/tags/随笔/" style="font-size: 10.00px;">随笔</a>
+					</div>
+				</section>
+				
+				
+				
+				<section class="switch-part switch-part3">
+					
+			          <a target="_blank" class="main-nav-link switch-friends-link" href="http://chenpengdsp.com">CP师兄的博客</a>
+			        
+				</section>
+				
+
+				
+			</div>
+		</div>
+	</header>				
+</div>
+    </div>
+    <div class="mid-col">
+      <nav id="mobile-nav">
+  	<div class="overlay"></div>
+	<div class="intrude-less">
+		<header id="header" class="inner">
+			<div class="profilepic">
+				<img src="http://whj-img.qiniudn.com/2014-11-03_145609.png">
+			</div>
+
+			<hgroup>
+			  <h1 class="header-author"><a href="/">WHJ</a></h1>
+			</hgroup>
+			
+			<p class="header-subtitle">WHJ&#39;s Heroic Joker</p>
+			
+			<nav class="header-menu">
+				<ul>
+				
+					<li><a href="/">主页</a></li>
+		        
+					<li><a href="/archives">所有文章</a></li>
+		        
+					<li><a href="/about">关于作者</a></li>
+		        
+		        <div class="clearfix"></div>
+				</ul>
+			</nav>
+			<nav class="header-nav">
+				<div class="social">
+					
+						<a class="github" target="_blank" href="https://github.com/whjgithub" title="github">github</a>
+			        
+						<a class="rss" target="_blank" href="/atom.xml" title="rss">rss</a>
+			        
+				</div>
+			</nav>
+		</header>				
+	</div>
+</nav>
+      <article id="post-2015-01-17-110743" class="article article-type-post" itemscope itemprop="blogPost">
+  
+    <div class="article-meta">
+      <a href="/2015/01/17/2015-01-17-110743/" class="article-date">
+  	<time datetime="2015-01-17T03:07:43.000Z" itemprop="datePublished">Jan 17 2015</time>
+</a>
+      
+      
+  <ul class="article-tag-list"><li class="article-tag-list-item"><a class="article-tag-list-link" href="/tags/数据结构/">数据结构</a></li><li class="article-tag-list-item"><a class="article-tag-list-link" href="/tags/笔记/">笔记</a></li></ul>
+
+    </div>
+  
+  <div class="article-inner">
+    
+      <input type="hidden" class="isFancy" />
+    
+    
+      <header class="article-header">
+        
+  
+    <h1 class="article-title" itemprop="name">
+      红黑树&lt;二&gt;
+    </h1>
+  
+
+      </header>
+    
+    <div class="article-entry" itemprop="articleBody">
+      
+        <p>　　在&lt;一&gt;中，我们已经阐释了红黑树的基本概念和特性，明白了其在基本操作上能始终保持O(lgn)的复杂度，都归功于在操作的同时能维持其红黑树的特性。我们还提到了红黑树的旋转，它是在对红黑树进行了修改之后进行特性维持的关键步骤。那么下面我们就要来看看对红黑树进行了插入与删除之后，具体如何维持红黑树的特性。<br><a id="more"></a></p>
+<h2 id="红黑树的插入">红黑树的插入</h2>
+<p>　　从&lt;一&gt;中我们可以看到，红黑树是在查找二叉树的基础上改进来的，所以红黑树的插入操作也应该可以从查找二叉树相应的操作上获取灵感。那么，我们下面就先来看看查找二叉树如何来插入结点。<br>　　查找二叉树不是本文的重点，其特性在&lt;一&gt;中有提及，在此恕不赘述。我们先贴出其插入操作的伪代码，然后再来详细解释。</p>
+<figure class="highlight"><table><tr><td class="gutter"><pre><div class="line">1</div><div class="line">2</div><div class="line">3</div><div class="line">4</div><div class="line">5</div><div class="line">6</div><div class="line">7</div><div class="line">8</div><div class="line">9</div><div class="line">10</div><div class="line">11</div><div class="line">12</div><div class="line">13</div><div class="line">14</div></pre></td><td class="code"><pre><div class="line">TREE-<span class="operator"><span class="keyword">INSERT</span>(T, z)  </span></div><div class="line">	y ← NIL  </div><div class="line">	x ← T.root               </div><div class="line">	while x ≠ NIL           </div><div class="line">    	y ←  x   </div><div class="line">    	<span class="keyword">if</span> z.<span class="keyword">key</span> &lt; x.<span class="keyword">key</span>  </div><div class="line">        	x ← x.<span class="keyword">left</span>  </div><div class="line">    	<span class="keyword">else</span> x ← x.<span class="keyword">right</span>  </div><div class="line">	z.p ← y  </div><div class="line">	<span class="keyword">if</span> y == NIL  </div><div class="line">    	T.root ← z         </div><div class="line">	elseif z.<span class="keyword">key</span> &lt; y.<span class="keyword">key</span>  </div><div class="line">    	y.<span class="keyword">left</span> ← z  </div><div class="line">	<span class="keyword">else</span> y.<span class="keyword">right</span> ← z</div></pre></td></tr></table></figure>
+
+<p>　　该方法的核心是，利用x记录现在操作的结点，y记录上一步的结点。循环中是不断在树形结构中步进寻找合适插入结点的叶结点位置，具体的要求就是大于该结点沿着右向下，小于该结点就沿左向下，然后把z结点和其父结点y的指针设置合适的值。<br>　　通过上面对查找二叉树的插入操作的了解，我们已经有了一个初步的认识，接下来要学习的红黑树的插入操作，只要在上述操作的基础上再加上恢复红黑树的特性的操作。我们来看伪代码：</p>
+<figure class="highlight"><table><tr><td class="gutter"><pre><div class="line">1</div><div class="line">2</div><div class="line">3</div><div class="line">4</div><div class="line">5</div><div class="line">6</div><div class="line">7</div><div class="line">8</div><div class="line">9</div><div class="line">10</div><div class="line">11</div><div class="line">12</div><div class="line">13</div><div class="line">14</div><div class="line">15</div><div class="line">16</div><div class="line">17</div><div class="line">18</div></pre></td><td class="code"><pre><div class="line">RB-<span class="operator"><span class="keyword">INSERT</span>(T, z)  </span></div><div class="line">	y ← NIL  </div><div class="line">	x ← T.root  </div><div class="line">	while x ≠ T.NIL  </div><div class="line">    	y ← x  </div><div class="line">    	<span class="keyword">if</span> z.<span class="keyword">key</span> &lt; x.<span class="keyword">key</span>  </div><div class="line">        	x ← x.<span class="keyword">left</span>  </div><div class="line">    	<span class="keyword">else</span> x ← x.<span class="keyword">right</span>  </div><div class="line">	z.p ← y  </div><div class="line">	<span class="keyword">if</span> y == nil[T]  </div><div class="line">    	T.root ← z  </div><div class="line">	elseif z.<span class="keyword">key</span> &lt; y.<span class="keyword">key</span>  </div><div class="line">    	y.<span class="keyword">left</span> ← z  </div><div class="line">	<span class="keyword">else</span> y.<span class="keyword">right</span> ← z  </div><div class="line">	z.<span class="keyword">left</span> ← T.NIL  </div><div class="line">	z.<span class="keyword">right</span> ← T.NIL  </div><div class="line">	z.color ← RED  </div><div class="line">	RB-<span class="keyword">INSERT</span>-FIXUP(T, z)</div></pre></td></tr></table></figure>
+
+<p>　　在这段代码的尾部，我们将插入结点的左右孩子都设置为空，并把结点颜色设置为红色。最后添加一个修复函数，但是，我们从上面这段代码里是看不出做了哪些修复操作的。我们在写这个函数之前，先来看看我们插入的这个结点会对该树造成哪些影响。首先，我们分析一下为什么要把新插入的结点设置为红色。<br>　　在此之前，我们还是要强调一下红黑树的特性：</p>
+<blockquote>
+<p>1）每个结点要么是红的，要么是黑的。<br>2）根结点是黑的。<br>3）每个叶结点，即空结点（NIL）是黑的。<br>4）如果一个结点是红的，那么它的俩个儿子都是黑的。<br>5）对每个结点，从该结点到其子孙结点的所有路径上包含相同数目的黑结点。</p>
+</blockquote>
+<p>然后，我们看到，当我们插入红色结点时，可能受影响的是（2）、（4）。性质（2）比较好处理，只要判断插入结点的父节点是否为空即可；性质（4）就需要作出局部的调整了。然而，当我们插入黑色结点的时候，虽然只会影响性质（5），但是该性质关系到整棵树中从根到叶的每一条路径，为了插入一个结点调整整棵树结构，是否有点得不偿失。<br>　　我们下面就要考虑如何在插入红色结点的情况下，如何使性质（4）得以保持。性质（4）关系到一个结点和它的两个子节点，当我们插入位置的父结点是黑色的，这时五条性质都将保持，无需考虑了；如果插入位置的父结点是红色的，此时性质（4）将被破坏，我们当然不能简单的把父结点改成黑色，因为这样性质（5）又会被破坏，所以我们还需要结合插入结点的祖父结点来考虑如何恢复。我们首先应该认识到，如果父结点是红色的，那么它就不是根节点，那么祖父结点一定存在，并且是黑色结点。接下来，我们从易到难一一考虑。</p>
+<blockquote>
+<p><strong>情况1：当前操作结点（z）的叔结点（祖父结点的另一个子节点）是红色结点。</strong><br>　　我们有性质（1）、（3）作为保证，则叔结点颜色肯定是存在的，哪怕是空结点（NIL）。此时，我们从祖父结点-&gt;父节点-&gt;操作结点-&gt;叶结点（空结点），一共有2+n个黑结点（n个出现在操作结点到叶结点之间，若z为插入结点，则n=0），也就是说以祖父结点为根的树从根到叶都是2+n个黑结点。那么，如果我们把父、叔结点涂黑，祖父结点涂红，以祖父结点为根的树仍为2+n个黑结点，性质（5）仍保持；但是于此同时，我们将祖父结点涂红可能造成与其父节点的冲突，所以我们应将祖父结点设置为当前操作结点z，继续修复工作。<br><strong>情况2：当前操作结点（z）的叔结点（祖父结点的另一个子节点）是黑色结点，并且z为父结点右子。</strong><br><strong>情况3：当前操作结点（z）的叔结点（祖父结点的另一个子节点）是黑色结点，并且z为父结点左子。</strong><br>　　情况2、3一看描述就非常的类似，所以我们放在一起来分析。因为叔结点是黑色，而父结点却是红色，所以我们没法像情况1一样通过局部这几个点的换色来修复性质（4），而且从情况1我们也可以看到，我们尽量只破坏性质（2）、（4），也就是我们不新增加黑结点（除了根结点，因为根变黑不影响性质（5）），只在保持性质（5）的前提下交换颜色来修复性质（4）。<br>　　其实，情况2可以转换成情况3集中处理。我们这样考虑：当前操作结点z是其父结点z.p的右子，我们参考系列&lt;一&gt;中的左旋操作，将z.p作为其中的pivot，进行左旋操作，则z.p将成为z的左子，然后我们交换它们的身份，现在z就是左子了。虽然有点绕，但是是不是就变成了情况3？而且，由于两个被操作的结点都是红色的，所以该变化没有引起多的性质破坏，尤其是性质（5）。<br>　　现在，我们就只要集中精力来解决情况3了。我们主要关注的结点是：z（当前操作结点）、z.p和z.p.p，现在z是z.p的左子，我们先假设z.p是z.p.p的左子（右子类似）。我们知道，z和z.p是红色的，z.p.p是黑色的，我们只要保持以z.p.p为根的子树在调整之后保持性质（5）即可。我们的策略是把z.p涂为黑色，z.p.p涂为红色，然后以z.p为pivot右旋，完成后z.p成为该子树的根，z为其左子，原来的z.p.p成为其右子。此时，以z.p为根的树仍旧保性质（5）。</p>
+</blockquote>
+<p>　　现在，我们对插入操作的修复就完成了。下面我们来看伪代码：</p>
+<figure class="highlight"><table><tr><td class="gutter"><pre><div class="line">1</div><div class="line">2</div><div class="line">3</div><div class="line">4</div><div class="line">5</div><div class="line">6</div><div class="line">7</div><div class="line">8</div><div class="line">9</div><div class="line">10</div><div class="line">11</div><div class="line">12</div><div class="line">13</div><div class="line">14</div><div class="line">15</div><div class="line">16</div><div class="line">17</div></pre></td><td class="code"><pre><div class="line">RB-<span class="operator"><span class="keyword">INSERT</span>-FIXUP(T, z)  </span></div><div class="line">	while z.p.color == RED                           //可能与性质（<span class="number">4</span>）冲突  </div><div class="line">    	<span class="keyword">do</span> <span class="keyword">if</span> z.p == z.p.p.<span class="keyword">left</span>  </div><div class="line">        	<span class="keyword">then</span> y ← z.p.p.<span class="keyword">right</span>  </div><div class="line">        	<span class="keyword">if</span> y.color == RED  </div><div class="line">            	<span class="keyword">then</span> z.p.color ← BLACK               //<span class="keyword">Case</span> <span class="number">1</span>  </div><div class="line">            	y.color ← BLACK                      //<span class="keyword">Case</span> <span class="number">1</span>  </div><div class="line">            	z.p.p.color ← RED                    //<span class="keyword">Case</span> <span class="number">1</span>  </div><div class="line">            	z ← z.p.p                            //<span class="keyword">Case</span> <span class="number">1</span>  </div><div class="line">        	<span class="keyword">else</span> <span class="keyword">if</span> z == z.p.<span class="keyword">right</span>  </div><div class="line">            	<span class="keyword">then</span> z ← z.p                         //<span class="keyword">Case</span> <span class="number">2</span>  </div><div class="line">            	<span class="keyword">LEFT</span>-ROTATE(T, z)                    //<span class="keyword">Case</span> <span class="number">2</span>  </div><div class="line">        	z.p.color ← BLACK                        //<span class="keyword">Case</span> <span class="number">3</span>  </div><div class="line">        	z.p.p.color ← RED                        //<span class="keyword">Case</span> <span class="number">3</span>  </div><div class="line">        	<span class="keyword">RIGHT</span>-ROTATE(T, z.p.p)                   //<span class="keyword">Case</span> <span class="number">3</span>  </div><div class="line">    	<span class="keyword">else</span> (same <span class="keyword">as</span> <span class="keyword">then</span> clause <span class="keyword">with</span> <span class="string">"right"</span> <span class="keyword">and</span> <span class="string">"left"</span> exchanged)  </div><div class="line">	T.root.color ← BLACK                             //保证性质（<span class="number">2</span>）</div></pre></td></tr></table></figure>
+
+<p>　<br>　　上面的代码省略了z.p是z.p.p的右子的情况，但是看明白的同学一定能理解这种情况应该怎么处理。是不是看了上面的分析再看伪代码就一清二楚了！下面还有几张示意图来加深一下大家的印象，我们一起来看一下：<br>　　　　　　　　<img src="http://whj-img.qiniudn.com/插入结点之后.png" alt="插入结点之后"><br>　　　　　　　　<img src="http://whj-img.qiniudn.com/情况1修复后.png" alt="情况1修复后"><br>　　　　　　　　<img src="http://whj-img.qiniudn.com/从情况2变成情况3.png" alt="从情况2变成情况3"><br>　　　　　　　　<img src="http://whj-img.qiniudn.com/情况3修复后.png" alt="情况3修复后"><br>　　上面的图分别展示的是（从上到下）：插入节点后、情况1修复后、从情况2变成情况3和情况3修复后，包含了我们所涉及到的各种情况。<br>　　最后，我们来看看RB-INSERT-FIXUP()的运行时间。通过上面的分析可以看到，这段修复程序只会在情况1才会重复执行，当碰到情况2和3时，执行完之后就结束了，也就是说，我们最多执行2次旋转操作（情况2向情况3转变一次，情况3修复一次）。而情况1每次会沿着树爬升2层，所以RB-INSERT-FIXUP()的运行时间O(lgn)。然后，RB-INSERT()操作在除了修复操作之外，就只涉及到依次向下寻找插入位置，所以运行时间也是O(lgn)，综上来看，RB-INSERT()的运行总时间即为O(lgn)。</p>
+<p>版权：本文采用以下协议进行授权，<a href="http://creativecommons.org/licenses/by-nc-nd/3.0/deed.zh" target="_blank" rel="external">自由转载 - 非商用 - 非衍生 - 保持署名 | Creative Commons BY-NC-ND 3.0</a>，转载请注明作者及出处。
+　　　
+　　</p>
+
+      
+    </div>
+    <footer class="article-footer">
+      
+      
+    </footer>
+  </div>
+  
+    
+<nav id="article-nav">
+  
+  
+    <a href="/2015/01/15/2015-01-15-180658/" id="article-nav-older" class="article-nav-link-wrap">
+      <div class="article-nav-title">红黑树&lt;一&gt;</div>
+      <strong class="article-nav-caption">&gt;</strong>
+    </a>
+  
+</nav>
+
+  
+</article>
+
+
+<div class="share">
+	<!-- JiaThis Button BEGIN -->
+	<div class="jiathis_style">
+		<span class="jiathis_txt">分享到：</span>
+		<a class="jiathis_button_tsina"></a>
+		<a class="jiathis_button_cqq"></a>
+		<a class="jiathis_button_douban"></a>
+		<a class="jiathis_button_weixin"></a>
+		<a class="jiathis_button_tumblr"></a>
+		<a href="http://www.jiathis.com/share" class="jiathis jiathis_txt jtico jtico_jiathis" target="_blank"></a>
+	</div>
+	<script type="text/javascript" src="http://v3.jiathis.com/code/jia.js?uid=1405949716054953" charset="utf-8"></script>
+	<!-- JiaThis Button END -->
+</div>
+
+
+
+<div class="duoshuo">
+	<!-- 多说评论框 start -->
+	<div class="ds-thread" data-thread-key="2015-01-17-110743" data-title="红黑树&lt;二&gt;" data-url="http://yoursite.com/2015/01/17/2015-01-17-110743/"></div>
+	<!-- 多说评论框 end -->
+	<!-- 多说公共JS代码 start (一个网页只需插入一次) -->
+	<script type="text/javascript">
+	var duoshuoQuery = {short_name:"whjgithub"};
+	(function() {
+		var ds = document.createElement('script');
+		ds.type = 'text/javascript';ds.async = true;
+		ds.src = (document.location.protocol == 'https:' ? 'https:' : 'http:') + '//static.duoshuo.com/embed.js';
+		ds.charset = 'UTF-8';
+		(document.getElementsByTagName('head')[0] 
+		 || document.getElementsByTagName('body')[0]).appendChild(ds);
+	})();
+	</script>
+	<!-- 多说公共JS代码 end -->
+</div>
+
+
+
+
+      <footer id="footer">
+  <div class="outer">
+    <div id="footer-info">
+    	<div class="footer-left">
+    		&copy; 2015 WHJ
+    	</div>
+      	<div class="footer-right">
+      		<a href="http://hexo.io/" target="_blank">Hexo</a>  Theme <a href="https://github.com/litten/hexo-theme-yilia" target="_blank">Yilia</a> by Litten
+      	</div>
+    </div>
+  </div>
+</footer>
+    </div>
+    
+  <link rel="stylesheet" href="/fancybox/jquery.fancybox.css" type="text/css">
+
+  <script src="/fancybox/jquery.fancybox.pack.js" type="text/javascript"></script>
+
+  <script src="/js/main.js" type="text/javascript"></script>
+
+
+  </div>
+</body>
+</html>
