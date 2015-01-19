@@ -110,7 +110,7 @@
 				
 				<section class="switch-part switch-part2">
 					<div class="widget tagcloud">
-						<a href="/tags/javascript/" style="font-size: 16.67px;">javascript</a><a href="/tags/python/" style="font-size: 16.67px;">python</a><a href="/tags/原创/" style="font-size: 16.67px;">原创</a><a href="/tags/数据结构/" style="font-size: 13.33px;">数据结构</a><a href="/tags/笔记/" style="font-size: 20.00px;">笔记</a><a href="/tags/随笔/" style="font-size: 10.00px;">随笔</a>
+						<a href="/tags/javascript/" style="font-size: 15.00px;">javascript</a><a href="/tags/python/" style="font-size: 15.00px;">python</a><a href="/tags/原创/" style="font-size: 15.00px;">原创</a><a href="/tags/数据结构/" style="font-size: 15.00px;">数据结构</a><a href="/tags/笔记/" style="font-size: 20.00px;">笔记</a><a href="/tags/随笔/" style="font-size: 10.00px;">随笔</a>
 					</div>
 				</section>
 				
@@ -216,7 +216,8 @@
 <p>　　现在，我们对插入操作的修复就完成了。下面我们来看伪代码：</p>
 <figure class="highlight"><table><tr><td class="gutter"><pre><div class="line">1</div><div class="line">2</div><div class="line">3</div><div class="line">4</div><div class="line">5</div><div class="line">6</div><div class="line">7</div><div class="line">8</div><div class="line">9</div><div class="line">10</div><div class="line">11</div><div class="line">12</div><div class="line">13</div><div class="line">14</div><div class="line">15</div><div class="line">16</div><div class="line">17</div></pre></td><td class="code"><pre><div class="line">RB-<span class="operator"><span class="keyword">INSERT</span>-FIXUP(T, z)  </span></div><div class="line">	while z.p.color == RED                           //可能与性质（<span class="number">4</span>）冲突  </div><div class="line">    	<span class="keyword">do</span> <span class="keyword">if</span> z.p == z.p.p.<span class="keyword">left</span>  </div><div class="line">        	<span class="keyword">then</span> y ← z.p.p.<span class="keyword">right</span>  </div><div class="line">        	<span class="keyword">if</span> y.color == RED  </div><div class="line">            	<span class="keyword">then</span> z.p.color ← BLACK               //<span class="keyword">Case</span> <span class="number">1</span>  </div><div class="line">            	y.color ← BLACK                      //<span class="keyword">Case</span> <span class="number">1</span>  </div><div class="line">            	z.p.p.color ← RED                    //<span class="keyword">Case</span> <span class="number">1</span>  </div><div class="line">            	z ← z.p.p                            //<span class="keyword">Case</span> <span class="number">1</span>  </div><div class="line">        	<span class="keyword">else</span> <span class="keyword">if</span> z == z.p.<span class="keyword">right</span>  </div><div class="line">            	<span class="keyword">then</span> z ← z.p                         //<span class="keyword">Case</span> <span class="number">2</span>  </div><div class="line">            	<span class="keyword">LEFT</span>-ROTATE(T, z)                    //<span class="keyword">Case</span> <span class="number">2</span>  </div><div class="line">        	z.p.color ← BLACK                        //<span class="keyword">Case</span> <span class="number">3</span>  </div><div class="line">        	z.p.p.color ← RED                        //<span class="keyword">Case</span> <span class="number">3</span>  </div><div class="line">        	<span class="keyword">RIGHT</span>-ROTATE(T, z.p.p)                   //<span class="keyword">Case</span> <span class="number">3</span>  </div><div class="line">    	<span class="keyword">else</span> (same <span class="keyword">as</span> <span class="keyword">then</span> clause <span class="keyword">with</span> <span class="string">"right"</span> <span class="keyword">and</span> <span class="string">"left"</span> exchanged)  </div><div class="line">	T.root.color ← BLACK                             //保证性质（<span class="number">2</span>）</div></pre></td></tr></table></figure>
 
-<p>　<br>　　上面的代码省略了z.p是z.p.p的右子的情况，但是看明白的同学一定能理解这种情况应该怎么处理。是不是看了上面的分析再看伪代码就一清二楚了！下面还有几张示意图来加深一下大家的印象，我们一起来看一下：<br>　　　　　　　　<img src="http://whj-img.qiniudn.com/插入结点之后.png" alt="插入结点之后"><br>　　　　　　　　<img src="http://whj-img.qiniudn.com/情况1修复后.png" alt="情况1修复后"><br>　　　　　　　　<img src="http://whj-img.qiniudn.com/从情况2变成情况3.png" alt="从情况2变成情况3"><br>　　　　　　　　<img src="http://whj-img.qiniudn.com/情况3修复后.png" alt="情况3修复后"><br>　　上面的图分别展示的是（从上到下）：插入节点后、情况1修复后、从情况2变成情况3和情况3修复后，包含了我们所涉及到的各种情况。<br>　　最后，我们来看看RB-INSERT-FIXUP()的运行时间。通过上面的分析可以看到，这段修复程序只会在情况1才会重复执行，当碰到情况2和3时，执行完之后就结束了，也就是说，我们最多执行2次旋转操作（情况2向情况3转变一次，情况3修复一次）。而情况1每次会沿着树爬升2层，所以RB-INSERT-FIXUP()的运行时间O(lgn)。然后，RB-INSERT()操作在除了修复操作之外，就只涉及到依次向下寻找插入位置，所以运行时间也是O(lgn)，综上来看，RB-INSERT()的运行总时间即为O(lgn)。</p>
+<p>　<br>　　上面的代码省略了z.p是z.p.p的右子的情况，但是看明白的同学一定能理解这种情况应该怎么处理。是不是看了上面的分析再看伪代码就一清二楚了！下面还有几张示意图来加深一下大家的印象，我们一起来看一下：<br>　　　　　　　　<img src="http://whj-img.qiniudn.com/插入结点之后.png" alt="插入结点之后"><br>　　　　　　　　<img src="http://whj-img.qiniudn.com/情况1修复后.png" alt="情况1修复后"><br>　　　　　　　　<img src="http://whj-img.qiniudn.com/从情况2变成情况3.png" alt="从情况2变成情况3"><br>　　　　　　　　<img src="http://whj-img.qiniudn.com/情况3修复后.png" alt="情况3修复后"><br>　　上面的图分别展示的是（从上到下）：插入节点后、情况1修复后、从情况2变成情况3和情况3修复后，包含了我们所涉及到的各种情况。<br>　　最后，我们来看看RB-INSERT-FIXUP的运行时间。通过上面的分析可以看到，这段修复程序只会在情况1才会重复执行，当碰到情况2和3时，执行完之后就结束了，也就是说，我们最多执行2次旋转操作（情况2向情况3转变一次，情况3修复一次）。而情况1每次会沿着树爬升2层，所以修复函数的运行时间为O（lgn）。然后，插入操作在除了修复操作之外，就只涉及到依次向下寻找插入位置，所以运行时间也为O（lgn）。综合上述论述来看，RB-INSERT的运行总时间即为O(lgn)。                                  </p>
+<p>上述的内容参考了<a href="http://blog.csdn.net/v_JULY_v/article/details/6105630" target="_blank" rel="external">http://blog.csdn.net/v_JULY_v/article/details/6105630</a></p>
 <p>版权：本文采用以下协议进行授权，<a href="http://creativecommons.org/licenses/by-nc-nd/3.0/deed.zh" target="_blank" rel="external">自由转载 - 非商用 - 非衍生 - 保持署名 | Creative Commons BY-NC-ND 3.0</a>，转载请注明作者及出处。
 　　　
 　　</p>
@@ -231,6 +232,15 @@
   
     
 <nav id="article-nav">
+  
+    <a href="/2015/01/19/2015-01-19-102502/" id="article-nav-newer" class="article-nav-link-wrap">
+      <strong class="article-nav-caption">&lt;</strong>
+      <div class="article-nav-title">
+        
+          红黑树&lt;三&gt;
+        
+      </div>
+    </a>
   
   
     <a href="/2015/01/15/2015-01-15-180658/" id="article-nav-older" class="article-nav-link-wrap">

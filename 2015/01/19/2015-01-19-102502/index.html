@@ -1,0 +1,321 @@
+<!DOCTYPE html>
+<html>
+<head>
+  <meta charset="utf-8">
+  
+  <title>红黑树&lt;三&gt; | WHJ&#39;s blog</title>
+  <meta name="viewport" content="width=device-width, initial-scale=1, maximum-scale=1">
+  <meta name="description" content="前面两部分终于把基础概念和插入学习完了，下面就是红黑树里最复杂的结点删除了。难啃的骨头慢慢啃，我们开始吧！">
+<meta property="og:type" content="article">
+<meta property="og:title" content="红黑树<三>">
+<meta property="og:url" content="http://yoursite.com/2015/01/19/2015-01-19-102502/">
+<meta property="og:site_name" content="WHJ's blog">
+<meta property="og:description" content="前面两部分终于把基础概念和插入学习完了，下面就是红黑树里最复杂的结点删除了。难啃的骨头慢慢啃，我们开始吧！">
+<meta property="og:image" content="http://whj-img.qiniudn.com/情况1前.png">
+<meta property="og:image" content="http://whj-img.qiniudn.com/情况1后.png">
+<meta property="og:image" content="http://whj-img.qiniudn.com/情况2前.png">
+<meta property="og:image" content="http://whj-img.qiniudn.com/情况2后.png">
+<meta property="og:image" content="http://whj-img.qiniudn.com/情况3前.png">
+<meta property="og:image" content="http://whj-img.qiniudn.com/情况3后.png">
+<meta property="og:image" content="http://whj-img.qiniudn.com/情况4前.png">
+<meta property="og:image" content="http://whj-img.qiniudn.com/情况4后.png">
+<meta name="twitter:card" content="summary">
+<meta name="twitter:title" content="红黑树<三>">
+<meta name="twitter:description" content="前面两部分终于把基础概念和插入学习完了，下面就是红黑树里最复杂的结点删除了。难啃的骨头慢慢啃，我们开始吧！">
+
+  
+    <link rel="alternative" href="/atom.xml" title="WHJ&#39;s blog" type="application/atom+xml">
+  
+  
+    <link rel="icon" href="/favicon.png">
+  
+  <link rel="stylesheet" href="/css/style.css" type="text/css">
+
+  <script src="http://libs.baidu.com/jquery/1.9.0/jquery.js"></script>
+</head>
+<body>
+  <div id="container">
+    <div class="left-col">
+    <div class="overlay"></div>
+<div class="intrude-less">
+	<header id="header" class="inner">
+		<div class="profilepic">
+			<img src="http://whj-img.qiniudn.com/2014-11-03_145609.png">
+		</div>
+
+		<hgroup>
+		  <h1 class="header-author"><a href="/">WHJ</a></h1>
+		</hgroup>
+
+		
+		<p class="header-subtitle">WHJ&#39;s Heroic Joker</p>
+		
+
+		
+			<div class="switch-btn">
+				<div class="icon">
+					<div class="icon-ctn">
+						<div class="icon-wrap icon-house" data-idx="0">
+							<div class="birdhouse"></div>
+							<div class="birdhouse_holes"></div>
+						</div>
+						<div class="icon-wrap icon-ribbon hide" data-idx="1">
+							<div class="ribbon"></div>
+						</div>
+						
+						<div class="icon-wrap icon-link hide" data-idx="2">
+							<div class="loopback_l"></div>
+							<div class="loopback_r"></div>
+						</div>
+						
+						
+					</div>
+					
+				</div>
+				<div class="tips-box hide">
+					<div class="tips-arrow"></div>
+					<ul class="tips-inner">
+						<li>菜单</li>
+						<li>标签</li>
+						
+						<li>友情链接</li>
+						
+						
+					</ul>
+				</div>
+			</div>
+		
+
+		<div class="switch-area">
+			<div class="switch-wrap">
+				<section class="switch-part switch-part1">
+					<nav class="header-menu">
+						<ul>
+						
+							<li><a href="/">主页</a></li>
+				        
+							<li><a href="/archives">所有文章</a></li>
+				        
+							<li><a href="/about">关于作者</a></li>
+				        
+						</ul>
+					</nav>
+					<nav class="header-nav">
+						<div class="social">
+							
+								<a class="github" target="_blank" href="https://github.com/whjgithub" title="github">github</a>
+					        
+								<a class="rss" target="_blank" href="/atom.xml" title="rss">rss</a>
+					        
+						</div>
+					</nav>
+				</section>
+				
+				
+				<section class="switch-part switch-part2">
+					<div class="widget tagcloud">
+						<a href="/tags/javascript/" style="font-size: 15.00px;">javascript</a><a href="/tags/python/" style="font-size: 15.00px;">python</a><a href="/tags/原创/" style="font-size: 15.00px;">原创</a><a href="/tags/数据结构/" style="font-size: 15.00px;">数据结构</a><a href="/tags/笔记/" style="font-size: 20.00px;">笔记</a><a href="/tags/随笔/" style="font-size: 10.00px;">随笔</a>
+					</div>
+				</section>
+				
+				
+				
+				<section class="switch-part switch-part3">
+					
+			          <a target="_blank" class="main-nav-link switch-friends-link" href="http://chenpengdsp.com">CP师兄的博客</a>
+			        
+				</section>
+				
+
+				
+			</div>
+		</div>
+	</header>				
+</div>
+    </div>
+    <div class="mid-col">
+      <nav id="mobile-nav">
+  	<div class="overlay"></div>
+	<div class="intrude-less">
+		<header id="header" class="inner">
+			<div class="profilepic">
+				<img src="http://whj-img.qiniudn.com/2014-11-03_145609.png">
+			</div>
+
+			<hgroup>
+			  <h1 class="header-author"><a href="/">WHJ</a></h1>
+			</hgroup>
+			
+			<p class="header-subtitle">WHJ&#39;s Heroic Joker</p>
+			
+			<nav class="header-menu">
+				<ul>
+				
+					<li><a href="/">主页</a></li>
+		        
+					<li><a href="/archives">所有文章</a></li>
+		        
+					<li><a href="/about">关于作者</a></li>
+		        
+		        <div class="clearfix"></div>
+				</ul>
+			</nav>
+			<nav class="header-nav">
+				<div class="social">
+					
+						<a class="github" target="_blank" href="https://github.com/whjgithub" title="github">github</a>
+			        
+						<a class="rss" target="_blank" href="/atom.xml" title="rss">rss</a>
+			        
+				</div>
+			</nav>
+		</header>				
+	</div>
+</nav>
+      <article id="post-2015-01-19-102502" class="article article-type-post" itemscope itemprop="blogPost">
+  
+    <div class="article-meta">
+      <a href="/2015/01/19/2015-01-19-102502/" class="article-date">
+  	<time datetime="2015-01-19T02:25:02.000Z" itemprop="datePublished">Jan 19 2015</time>
+</a>
+      
+      
+  <ul class="article-tag-list"><li class="article-tag-list-item"><a class="article-tag-list-link" href="/tags/数据结构/">数据结构</a></li><li class="article-tag-list-item"><a class="article-tag-list-link" href="/tags/笔记/">笔记</a></li></ul>
+
+    </div>
+  
+  <div class="article-inner">
+    
+      <input type="hidden" class="isFancy" />
+    
+    
+      <header class="article-header">
+        
+  
+    <h1 class="article-title" itemprop="name">
+      红黑树&lt;三&gt;
+    </h1>
+  
+
+      </header>
+    
+    <div class="article-entry" itemprop="articleBody">
+      
+        <p>　　前面两部分终于把基础概念和插入学习完了，下面就是红黑树里最复杂的结点删除了。难啃的骨头慢慢啃，我们开始吧！</p>
+<p><a id="more"></a><br>　　一提到删除，再结合前面我们对红黑树和搜索二叉树的基本了解，我们马上可以想到这几种情况：</p>
+<blockquote>
+<p>１.没有子结点，即左右子结点均为空结点（NIL）。<br>２.只有一个子结点，即另一个子结点为空结点（NIL）。<br>３.两个子结点均不为空结点（NIL）。</p>
+</blockquote>
+<p>　　有了插入结点的经验，我们可以类比，也就是说我们应该先考虑恢复搜索二叉树的性质。情况1，很简单，只要把该结点删除，并将其父结点指向它的指针置空即可。情况2也不复杂，删除该结点，把该结点父结点指向其的指针指向其唯一儿子即可。情况3是其中较为复杂的情况，因为我们需要先找到该结点的前驱（比其小的最大结点）/后继（比其大的最小结点），然后让它来代替被删除的结点。其实，寻找前驱/后继结点非常简单，前驱就是该结点左子中一直沿右子下降的最后一个非空结点，同理，后继是该结点右子一直沿左子下降的最后一个非空结点。<br>　　仅仅完成删除和保持搜索二叉树的性质对于红黑树明显是不够的，我们还必须强调红黑树的五个特性（这是红黑树的根本）：</p>
+<blockquote>
+<p>1）每个结点要么是红的，要么是黑的。<br>2）根结点是黑的。<br>3）每个叶结点，即空结点（NIL）是黑的。<br>4）如果一个结点是红的，那么它的俩个儿子都是黑的。<br>5）对每个结点，从该结点到其子孙结点的所有路径上包含相同数目的黑结点。</p>
+</blockquote>
+<p>　　其中的每个特性都提到结点的颜色，连名字里也有“红黑”二字，可见结点颜色对于该数据结构的重要性，所以我们肯定要记下删除结点的颜色并对症下药。<br>　　首先，我们考虑删去的是红色结点，对于情况1和2肯定不会破坏任何一个性质。针对情况2简单解释一下，1、2、3，4由于该结点是红，那么它的子结点和父结点肯定都不是红色，否则一开始就违背4，所以删去该结点并用其孩子代替肯定也不会违背。关于5，由于删去的红色结点对于该分支上的黑色结点没有影响，所以也不会违背5。情况3就要稍微复杂一些了，因为我们需要删去该结点并用其前驱/后继代替。我们可以这样来考虑：把该结点替换成其前驱/后继的时候不改变其颜色，则最终失去的结点颜色就是前驱/后继结点原来的颜色。现在考虑它是红色，然后根据前驱/后继结点的定义，可以看到这和情况1是一样的，所以也是不会破坏性质的。综上就是，删去一个红色的结点是不会影响红黑树的性质的。<br>　　考虑完了红色，剩下的就是黑色了。情况1删去黑色结点，很明显会影响性质5；情况2同样影响性质5，如果代替本身的子结点和其父结点都为红色还会影响性质4，在本身是根结点和子结点是红色的情况下还会影响性质2；情况3同样像上面那样考虑失去的结点的话，很明显也是会影响性质5的。可见我们在删除黑色结点的时候就需要维护该数据结构的性质了。下面给出删除操作的伪代码。</p>
+<figure class="highlight"><table><tr><td class="gutter"><pre><div class="line">1</div><div class="line">2</div><div class="line">3</div><div class="line">4</div><div class="line">5</div><div class="line">6</div><div class="line">7</div><div class="line">8</div><div class="line">9</div><div class="line">10</div><div class="line">11</div><div class="line">12</div><div class="line">13</div><div class="line">14</div><div class="line">15</div><div class="line">16</div><div class="line">17</div><div class="line">18</div><div class="line">19</div><div class="line">20</div><div class="line">21</div><div class="line">22</div></pre></td><td class="code"><pre><div class="line"><span class="type">RB</span>-<span class="type">DELETE</span>(<span class="type">T</span>,z)</div><div class="line">	y = z                                    <span class="comment">//y指示失去结点（包括直接删去，或者被移动来填补空缺）</span></div><div class="line">	y-original-color = y.color               <span class="comment">//y-original-color用来记录失去的结点颜色</span></div><div class="line">	<span class="keyword">if</span> z.<span class="keyword">left</span> == <span class="type">T</span>.<span class="type">NIL</span>                       <span class="comment">//处理z的一侧孩子为空或者均为空的情况</span></div><div class="line">		x = z.<span class="keyword">right</span></div><div class="line">		<span class="type">RB</span>-<span class="type">TRANSPLANT</span>(<span class="type">T</span>,z,z.<span class="keyword">right</span>)</div><div class="line">	elseif z.<span class="keyword">right</span> == <span class="type">T</span>.<span class="type">NIL</span></div><div class="line">		x = z.<span class="keyword">left</span></div><div class="line">		<span class="type">RB</span>-<span class="type">TRANSPLANT</span>(<span class="type">T</span>,z,z.<span class="keyword">left</span>)</div><div class="line">	<span class="keyword">else</span> y = <span class="type">TREE</span>-<span class="type">MINIMUM</span>(<span class="type">Z</span>.<span class="keyword">right</span>)           <span class="comment">//若z的两侧孩子均不为空，就需要用前驱/后继替换，此处用的是后继  </span></div><div class="line">		y-original-color = y.color</div><div class="line">		x = y.<span class="keyword">right</span></div><div class="line">		<span class="keyword">if</span> y.p != z                          <span class="comment">//y不为z的孩子，则需要用右子替换y（y为后继则y无左孩子），并设置y.right</span></div><div class="line">			<span class="type">RB</span>-<span class="type">TRANSPLANT</span>(<span class="type">T</span>,y,y.<span class="keyword">right</span>)</div><div class="line">			y.<span class="keyword">right</span> = z.<span class="keyword">right</span></div><div class="line">			z.<span class="keyword">right</span>.p = y</div><div class="line">		<span class="type">RB</span>-<span class="type">TRANSPLANT</span>(<span class="type">T</span>,z,y)                 <span class="comment">//y在通用情况下，替换z并设置左侧孩子。y总没有左孩子，可统一设置</span></div><div class="line">		y.<span class="keyword">left</span> = z.<span class="keyword">left</span></div><div class="line">		y.<span class="keyword">left</span>.p = y</div><div class="line">		y.color = z.color</div><div class="line">	<span class="keyword">if</span> y-original-color == <span class="type">BLACK</span></div><div class="line">		<span class="type">RB</span>-<span class="type">DELETE</span>-<span class="type">FIXUP</span>(<span class="type">T</span>,x)</div></pre></td></tr></table></figure>
+
+<hr>
+<figure class="highlight"><table><tr><td class="gutter"><pre><div class="line">1</div><div class="line">2</div><div class="line">3</div><div class="line">4</div><div class="line">5</div><div class="line">6</div><div class="line">7</div></pre></td><td class="code"><pre><div class="line">RB-TRANSPLANT(T,u,v)</div><div class="line">	<span class="keyword">if</span> u.<span class="variable">p =</span> T.NIl</div><div class="line">		T.<span class="variable">root =</span> v</div><div class="line">	elseif <span class="variable">u =</span>= u.p.left</div><div class="line">		u.p.<span class="variable">left =</span> v</div><div class="line">	<span class="keyword">else</span> u.p.<span class="variable">right =</span> v</div><div class="line">		v.<span class="variable">p =</span> u.p</div></pre></td></tr></table></figure>
+
+<p>　　第一段伪代码类似红黑树的插入伪代码，基础的都是搜索二叉树的相关代码，只是在最后加入一段修复代码，而且根据我们的分析也很好理解，是在判断到删去黑色结点之后再调用修复函数。这里需要注意的是，我们使用后继来代替被删除的结点，寻找后继的方法是：在右孩子里，一直沿左子树向下找，直到结点的子结点都为空；前驱也提一下，在左孩子里，一直沿右子树向下找，直到结点的子结点都为空。第二段短小的代码就更好理解了，就是将原本的u结点替换为v结点，但是只是对删去结点的父结点进行了相关设置，并没有修改被移动节点的父子结点，这都需要我们自己来考虑。<br>　　最后，最困难的问题出现了，如何修复？在上文已经分析了各种情况出现的性质破坏，我们可以看到，每一种情况都破坏了性质5，并且y（失去的结点）的任何先祖都会不满足性质5。我们的想法是，将出现在原来y结点位置的x结点视为还有一重黑色，在这样的假设下，y的先祖就都恢复了性质5。现在x结点就是黑黑色或红黑色，但是这并不写在x结点的color属性里，我们只是这样来理解x结点，并不实质反应到属性上。<br>　　还是从简单的开始，如果x结点是红黑色的，也就是说x结点以前是红色的。<strong>以前是红色的，现在变成红黑色，破坏了性质1，现在我们单纯的把它变为黑色，修复了性质1，</strong>而且也没有多的性质被破坏，因为黑色不会出现性质4的冲突，而5也不会因为去掉红色被破坏，就是这么简单。剩下的黑黑色就没这么简单了，我们逐一来研究。</p>
+<hr>
+<p>　　<strong>情况1：x的兄弟结点w是红色的</strong><br>　　注：下面图片中x结点左侧会标注N<br>　　　　　　　　　　<img src="http://whj-img.qiniudn.com/情况1前.png" alt="情况1变换前"><br>　　上图就是符合我们情况1的。此时，我们只需要以x.p为pivot左旋，然后交换x.p和w的颜色即可。下面是处理后的图：<br>　　　　　　　　　　<img src="http://whj-img.qiniudn.com/情况1后.png" alt="情况1变换后"><br>　　上图是变换后的情况，可见该局部的性质都没有破坏，同时需要注意的是，x结点的兄弟结点变了。</p>
+<hr>
+<p>　　<strong>情况2：x的兄弟结点w是黑色的，而且w的两个子结点都是黑色的</strong><br>　　　　　　　　　　<img src="http://whj-img.qiniudn.com/情况2前.png" alt="情况2变换前"><br>　　上图就是符合我们情况2的。此时，我们只需要将x的兄弟改为红色，然后把x的黑黑色去掉一个黑色，将此黑色转移到x.p上，同时把x.p设置为新的x结点。这样的话，应该根据新的x的color属性继续调整。<br>　　　　　　　　　　<img src="http://whj-img.qiniudn.com/情况2后.png" alt="情况2变换后"><br>　　上图是变换后的情况，新的x结点是原结点上爬一层的结果，而且重新进入循环处理。</p>
+<hr>
+<p>　　<strong>情况3：x的兄弟结点w是黑色的，而且w的左孩子是红色的，w的右孩子是黑色的</strong><br>　　　　　　　　　　<img src="http://whj-img.qiniudn.com/情况3前.png" alt="情况3变换前"><br>　　上图就是符合我们情况3的。我们先交换x的兄弟和其左孩子的颜色，然后以x的兄弟为pivot右旋。此时，该局部的特性没有被破环，而且情况3经过处理后就变成了情况4。下面就是转换后的示意图：<br>　　　　　　　　　　<img src="http://whj-img.qiniudn.com/情况3后.png" alt="情况3变换后"></p>
+<hr>
+<p>　　<strong>情况4：x的兄弟结点w是黑色的，而且w的右孩子是红色的</strong><br>　　　　　　　　　　<img src="http://whj-img.qiniudn.com/情况4前.png" alt="情况4变换前"><br>　　上图就是符合我们情况4的。我们首先交换x.p和x的兄弟的颜色，接着把x的兄弟的右子涂黑，再以x.p为pivot左旋，这样就可以去掉x的另一重黑色，并且没有改变该局部的特性。下面调整后的图案：<br>　　　　　　　　　　<img src="http://whj-img.qiniudn.com/情况4后.png" alt="情况4变换后"><br>　　此情况中，我们需要注意的是，<strong>变化前的x.p结点其实可以是任意的颜色，同时对于x的兄弟结点我们也不限制其色彩，</strong>而无论它们是什么颜色在执行了上述的变化之后，都符合红黑树的特性。此情况修复结束后，x应被设置为T.root。</p>
+<hr>
+<p>　　通过上面细致的分析，伪代码相信一定没有难度了，下面就是上述论述的伪代码：</p>
+<figure class="highlight"><table><tr><td class="gutter"><pre><div class="line">1</div><div class="line">2</div><div class="line">3</div><div class="line">4</div><div class="line">5</div><div class="line">6</div><div class="line">7</div><div class="line">8</div><div class="line">9</div><div class="line">10</div><div class="line">11</div><div class="line">12</div><div class="line">13</div><div class="line">14</div><div class="line">15</div><div class="line">16</div><div class="line">17</div><div class="line">18</div><div class="line">19</div><div class="line">20</div><div class="line">21</div><div class="line">22</div><div class="line">23</div><div class="line">24</div></pre></td><td class="code"><pre><div class="line">RB-DELETE-FIXUP(T, x) </div><div class="line">	<span class="keyword">while</span> x != T.root and x.<span class="keyword">color</span> = BLACK    </div><div class="line">	    <span class="keyword">if</span> x == x.p.left   </div><div class="line">	        w = x.p.right    </div><div class="line">	        <span class="keyword">if</span> w.<span class="keyword">color</span> = RED    </div><div class="line">	            w.<span class="keyword">color</span> = BLACK                          <span class="comment">//Case 1    </span></div><div class="line">	            x.p.<span class="keyword">color</span> = RED                          <span class="comment">//Case 1    </span></div><div class="line">	            LEFT-ROTATE(T, x.p)                      <span class="comment">//Case 1    </span></div><div class="line">	            w = x.p.right                            <span class="comment">//Case 1    </span></div><div class="line">	        <span class="keyword">if</span> w.left.<span class="keyword">color</span> == BLACK and w.right.<span class="keyword">color</span> == BLACK    </div><div class="line">	            w.<span class="keyword">color</span> = RED                           <span class="comment">//Case 2    </span></div><div class="line">	            x = x.p                             <span class="comment">//Case 2    </span></div><div class="line">	        elseif w.right.<span class="keyword">color</span> == BLACK    </div><div class="line">	            w.left.<span class="keyword">color</span> = BLACK            <span class="comment">//Case 3    </span></div><div class="line">	            w.<span class="keyword">color</span> = RED                    <span class="comment">//Case 3    </span></div><div class="line">	            RIGHT-ROTATE(T, w)               <span class="comment">// Case 3    </span></div><div class="line">	            w = x.p.right                   <span class="comment">//Case 3    </span></div><div class="line">	            w.<span class="keyword">color</span> = x.p.<span class="keyword">color</span>                  <span class="comment">//Case 4    </span></div><div class="line">	            x.p.<span class="keyword">color</span> = BLACK                    <span class="comment">//Case 4    </span></div><div class="line">	            w.right.<span class="keyword">color</span> = BLACK                <span class="comment">//Case 4    </span></div><div class="line">	            LEFT-ROTATE(T, x.p)                  <span class="comment">//Case 4    </span></div><div class="line">	            x = T.root                           <span class="comment">//Case 4    </span></div><div class="line">	    <span class="keyword">else</span> (此时x=x.p.right，和上面情况类似)    </div><div class="line">	x.<span class="keyword">color</span> = BLACK  <span class="comment">//此时循环终止，x为T.root或者x.color=RED（红黑色），都应该将其设置为黑色保持性质</span></div></pre></td></tr></table></figure>
+
+<p>　　RB-DELETE()的运算时间如何？首先，不调用修正函数时，最复杂的就是寻找后继，逐层下降也就是O(lgn)的时间复杂度。调用<br>RB-DELETE-FIXUP()时，情况1变换为后三种，情况2会向上爬升，而情况3变为4，4就终结了，而且每一种情况进行的颜色交换和旋转都是有限次数，所以肯定也不会超过O(lgn)。综上，RB-DELETE()运行总时间为O(lgn)。<br>　　可见，红黑树的插入和删除操作都是O（lgn）的复杂度，很好的解释了其优良的性质。</p>
+<p>上述的内容参考了<a href="http://blog.csdn.net/v_JULY_v/article/details/6105630" target="_blank" rel="external">http://blog.csdn.net/v_JULY_v/article/details/6105630</a></p>
+<p>版权：本文采用以下协议进行授权，<a href="http://creativecommons.org/licenses/by-nc-nd/3.0/deed.zh" target="_blank" rel="external">自由转载 - 非商用 - 非衍生 - 保持署名 | Creative Commons BY-NC-ND 3.0</a>，转载请注明作者及出处。</p>
+
+      
+    </div>
+    <footer class="article-footer">
+      
+      
+    </footer>
+  </div>
+  
+    
+<nav id="article-nav">
+  
+  
+    <a href="/2015/01/17/2015-01-17-110743/" id="article-nav-older" class="article-nav-link-wrap">
+      <div class="article-nav-title">红黑树&lt;二&gt;</div>
+      <strong class="article-nav-caption">&gt;</strong>
+    </a>
+  
+</nav>
+
+  
+</article>
+
+
+<div class="share">
+	<!-- JiaThis Button BEGIN -->
+	<div class="jiathis_style">
+		<span class="jiathis_txt">分享到：</span>
+		<a class="jiathis_button_tsina"></a>
+		<a class="jiathis_button_cqq"></a>
+		<a class="jiathis_button_douban"></a>
+		<a class="jiathis_button_weixin"></a>
+		<a class="jiathis_button_tumblr"></a>
+		<a href="http://www.jiathis.com/share" class="jiathis jiathis_txt jtico jtico_jiathis" target="_blank"></a>
+	</div>
+	<script type="text/javascript" src="http://v3.jiathis.com/code/jia.js?uid=1405949716054953" charset="utf-8"></script>
+	<!-- JiaThis Button END -->
+</div>
+
+
+
+<div class="duoshuo">
+	<!-- 多说评论框 start -->
+	<div class="ds-thread" data-thread-key="2015-01-19-102502" data-title="红黑树&lt;三&gt;" data-url="http://yoursite.com/2015/01/19/2015-01-19-102502/"></div>
+	<!-- 多说评论框 end -->
+	<!-- 多说公共JS代码 start (一个网页只需插入一次) -->
+	<script type="text/javascript">
+	var duoshuoQuery = {short_name:"whjgithub"};
+	(function() {
+		var ds = document.createElement('script');
+		ds.type = 'text/javascript';ds.async = true;
+		ds.src = (document.location.protocol == 'https:' ? 'https:' : 'http:') + '//static.duoshuo.com/embed.js';
+		ds.charset = 'UTF-8';
+		(document.getElementsByTagName('head')[0] 
+		 || document.getElementsByTagName('body')[0]).appendChild(ds);
+	})();
+	</script>
+	<!-- 多说公共JS代码 end -->
+</div>
+
+
+
+
+      <footer id="footer">
+  <div class="outer">
+    <div id="footer-info">
+    	<div class="footer-left">
+    		&copy; 2015 WHJ
+    	</div>
+      	<div class="footer-right">
+      		<a href="http://hexo.io/" target="_blank">Hexo</a>  Theme <a href="https://github.com/litten/hexo-theme-yilia" target="_blank">Yilia</a> by Litten
+      	</div>
+    </div>
+  </div>
+</footer>
+    </div>
+    
+  <link rel="stylesheet" href="/fancybox/jquery.fancybox.css" type="text/css">
+
+  <script src="/fancybox/jquery.fancybox.pack.js" type="text/javascript"></script>
+
+  <script src="/js/main.js" type="text/javascript"></script>
+
+
+  </div>
+</body>
+</html>
