@@ -1,0 +1,308 @@
+<!DOCTYPE html>
+<html>
+<head>
+  <meta charset="utf-8">
+  
+  <title>排序算法总结&lt;一&gt; | WHJ&#39;s blog</title>
+  <meta name="viewport" content="width=device-width, initial-scale=1, maximum-scale=1">
+  <meta name="description" content="最近在准备各个实习面试，也是逐渐接触了各种面试和笔试题，多次碰到算法里的排序算法。各种算法以前也曾学习研究过，但是，总是在脑子里像浆糊般搅在一起，所以，决定写个笔记总结一下自己和各种资料里学习到的，以留后用。">
+<meta property="og:type" content="article">
+<meta property="og:title" content="排序算法总结<一>">
+<meta property="og:url" content="http://yoursite.com/2015/03/23/2015-03-23-213552/">
+<meta property="og:site_name" content="WHJ's blog">
+<meta property="og:description" content="最近在准备各个实习面试，也是逐渐接触了各种面试和笔试题，多次碰到算法里的排序算法。各种算法以前也曾学习研究过，但是，总是在脑子里像浆糊般搅在一起，所以，决定写个笔记总结一下自己和各种资料里学习到的，以留后用。">
+<meta name="twitter:card" content="summary">
+<meta name="twitter:title" content="排序算法总结<一>">
+<meta name="twitter:description" content="最近在准备各个实习面试，也是逐渐接触了各种面试和笔试题，多次碰到算法里的排序算法。各种算法以前也曾学习研究过，但是，总是在脑子里像浆糊般搅在一起，所以，决定写个笔记总结一下自己和各种资料里学习到的，以留后用。">
+
+  
+    <link rel="alternative" href="/atom.xml" title="WHJ&#39;s blog" type="application/atom+xml">
+  
+  
+    <link rel="icon" href="/favicon.png">
+  
+  <link rel="stylesheet" href="/css/style.css" type="text/css">
+
+  <script src="http://libs.baidu.com/jquery/1.9.0/jquery.js"></script>
+</head>
+<body>
+  <div id="container">
+    <div class="left-col">
+    <div class="overlay"></div>
+<div class="intrude-less">
+	<header id="header" class="inner">
+		<div class="profilepic">
+			<img src="http://whj-img.qiniudn.com/2014-11-03_145609.png">
+		</div>
+
+		<hgroup>
+		  <h1 class="header-author"><a href="/">WHJ</a></h1>
+		</hgroup>
+
+		
+		<p class="header-subtitle">WHJ&#39;s Heroic Joker</p>
+		
+
+		
+			<div class="switch-btn">
+				<div class="icon">
+					<div class="icon-ctn">
+						<div class="icon-wrap icon-house" data-idx="0">
+							<div class="birdhouse"></div>
+							<div class="birdhouse_holes"></div>
+						</div>
+						<div class="icon-wrap icon-ribbon hide" data-idx="1">
+							<div class="ribbon"></div>
+						</div>
+						
+						<div class="icon-wrap icon-link hide" data-idx="2">
+							<div class="loopback_l"></div>
+							<div class="loopback_r"></div>
+						</div>
+						
+						
+					</div>
+					
+				</div>
+				<div class="tips-box hide">
+					<div class="tips-arrow"></div>
+					<ul class="tips-inner">
+						<li>菜单</li>
+						<li>标签</li>
+						
+						<li>友情链接</li>
+						
+						
+					</ul>
+				</div>
+			</div>
+		
+
+		<div class="switch-area">
+			<div class="switch-wrap">
+				<section class="switch-part switch-part1">
+					<nav class="header-menu">
+						<ul>
+						
+							<li><a href="/">主页</a></li>
+				        
+							<li><a href="/archives">所有文章</a></li>
+				        
+							<li><a href="/about">关于作者</a></li>
+				        
+						</ul>
+					</nav>
+					<nav class="header-nav">
+						<div class="social">
+							
+								<a class="github" target="_blank" href="https://github.com/whjgithub" title="github">github</a>
+					        
+								<a class="rss" target="_blank" href="/atom.xml" title="rss">rss</a>
+					        
+						</div>
+					</nav>
+				</section>
+				
+				
+				<section class="switch-part switch-part2">
+					<div class="widget tagcloud">
+						<a href="/tags/javascript/" style="font-size: 13.33px;">javascript</a><a href="/tags/python/" style="font-size: 13.33px;">python</a><a href="/tags/原创/" style="font-size: 16.67px;">原创</a><a href="/tags/数据结构/" style="font-size: 13.33px;">数据结构</a><a href="/tags/笔记/" style="font-size: 20.00px;">笔记</a><a href="/tags/算法/" style="font-size: 10.00px;">算法</a><a href="/tags/随笔/" style="font-size: 10.00px;">随笔</a>
+					</div>
+				</section>
+				
+				
+				
+				<section class="switch-part switch-part3">
+					
+			          <a target="_blank" class="main-nav-link switch-friends-link" href="http://chenpengdsp.com">CP师兄的博客</a>
+			        
+				</section>
+				
+
+				
+			</div>
+		</div>
+	</header>				
+</div>
+    </div>
+    <div class="mid-col">
+      <nav id="mobile-nav">
+  	<div class="overlay"></div>
+	<div class="intrude-less">
+		<header id="header" class="inner">
+			<div class="profilepic">
+				<img src="http://whj-img.qiniudn.com/2014-11-03_145609.png">
+			</div>
+
+			<hgroup>
+			  <h1 class="header-author"><a href="/">WHJ</a></h1>
+			</hgroup>
+			
+			<p class="header-subtitle">WHJ&#39;s Heroic Joker</p>
+			
+			<nav class="header-menu">
+				<ul>
+				
+					<li><a href="/">主页</a></li>
+		        
+					<li><a href="/archives">所有文章</a></li>
+		        
+					<li><a href="/about">关于作者</a></li>
+		        
+		        <div class="clearfix"></div>
+				</ul>
+			</nav>
+			<nav class="header-nav">
+				<div class="social">
+					
+						<a class="github" target="_blank" href="https://github.com/whjgithub" title="github">github</a>
+			        
+						<a class="rss" target="_blank" href="/atom.xml" title="rss">rss</a>
+			        
+				</div>
+			</nav>
+		</header>				
+	</div>
+</nav>
+      <article id="post-2015-03-23-213552" class="article article-type-post" itemscope itemprop="blogPost">
+  
+    <div class="article-meta">
+      <a href="/2015/03/23/2015-03-23-213552/" class="article-date">
+  	<time datetime="2015-03-23T13:35:52.000Z" itemprop="datePublished">Mar 23 2015</time>
+</a>
+      
+      
+  <ul class="article-tag-list"><li class="article-tag-list-item"><a class="article-tag-list-link" href="/tags/笔记/">笔记</a></li><li class="article-tag-list-item"><a class="article-tag-list-link" href="/tags/算法/">算法</a></li></ul>
+
+    </div>
+  
+  <div class="article-inner">
+    
+      <input type="hidden" class="isFancy" />
+    
+    
+      <header class="article-header">
+        
+  
+    <h1 class="article-title" itemprop="name">
+      排序算法总结&lt;一&gt;
+    </h1>
+  
+
+      </header>
+    
+    <div class="article-entry" itemprop="articleBody">
+      
+        <p>　　最近在准备各个实习面试，也是逐渐接触了各种面试和笔试题，多次碰到算法里的排序算法。各种算法以前也曾学习研究过，但是，总是在脑子里像浆糊般搅在一起，所以，决定写个笔记总结一下自己和各种资料里学习到的，以留后用。<br><a id="more"></a></p>
+<h2 id="平方阶排序">平方阶排序</h2>
+<p>（1）冒泡排序<br>　　算法思想：每一趟排序都使得有序区多一个数据（气泡），所以n个数只需要（n-1）趟就可以使整个数据有序。具体的方法是，每次从一端开始，顺序向另一端两两比较，每次将大（小）的移动到后端，每完成一次，后端有序区就会多一个数。</p>
+<figure class="highlight"><table><tr><td class="gutter"><pre><div class="line">1</div><div class="line">2</div><div class="line">3</div><div class="line">4</div><div class="line">5</div><div class="line">6</div><div class="line">7</div><div class="line">8</div><div class="line">9</div><div class="line">10</div><div class="line">11</div><div class="line">12</div><div class="line">13</div></pre></td><td class="code"><pre><div class="line"><span class="keyword">template</span> &lt;class T&gt;</div><div class="line"><span class="type">void</span> <span class="type">BubbleSort</span>(T *list, <span class="type">int</span> n){</div><div class="line">	T temp;</div><div class="line">	<span class="keyword">for</span>(<span class="type">int</span> i = <span class="number">1</span>; i &lt; n; i++){</div><div class="line">		<span class="keyword">for</span>(<span class="type">int</span> j = <span class="number">0</span>; j &lt; n-i; j++){</div><div class="line">			<span class="keyword">if</span>(list[j] &gt; list[j+<span class="number">1</span>]){</div><div class="line">				temp = list[j];</div><div class="line">				list[j] = list[j+<span class="number">1</span>];</div><div class="line">				list[j+<span class="number">1</span>] = temp;</div><div class="line">			}</div><div class="line">		}</div><div class="line">	}</div><div class="line">}</div></pre></td></tr></table></figure>
+
+<p>　　上面的代码是模板函数，适用于各种定义了大于运算符的数据类型。并且，上述代码是每次将较大的数向后移动，也就是说，排完顺序后是从小到大的，需要从大到小的代码类似。<br>　　我们从上面的代码很快就可以看出，如果一开始传入的数据就是有序的，照理走完一边就可以发现了，但是它还是会循环完全过程，所以我们应该加入一个bool变量来优化该程序，在发现已经有序了就立即跳出程序。</p>
+<figure class="highlight"><table><tr><td class="gutter"><pre><div class="line">1</div><div class="line">2</div><div class="line">3</div><div class="line">4</div><div class="line">5</div><div class="line">6</div><div class="line">7</div><div class="line">8</div><div class="line">9</div><div class="line">10</div><div class="line">11</div><div class="line">12</div><div class="line">13</div><div class="line">14</div><div class="line">15</div><div class="line">16</div><div class="line">17</div></pre></td><td class="code"><pre><div class="line"><span class="keyword">template</span> &lt;<span class="keyword">class</span> T&gt;</div><div class="line"><span class="keyword">void</span> BubbleSort(T *<span class="built_in">list</span>, <span class="keyword">int</span> n){</div><div class="line">	T temp;</div><div class="line">	<span class="keyword">bool</span> exchange;</div><div class="line">	<span class="keyword">for</span>(<span class="keyword">int</span> i = <span class="number">1</span>; i &lt; n; i++){</div><div class="line">		exchange = <span class="number">0</span>;</div><div class="line">		<span class="keyword">for</span>(<span class="keyword">int</span> j = <span class="number">0</span>; j &lt; n-i; j++){</div><div class="line">			<span class="keyword">if</span>(<span class="built_in">list</span>[j] &gt; <span class="built_in">list</span>[j+<span class="number">1</span>]){</div><div class="line">				temp = <span class="built_in">list</span>[j];</div><div class="line">				<span class="built_in">list</span>[j] = <span class="built_in">list</span>[j+<span class="number">1</span>];</div><div class="line">				<span class="built_in">list</span>[j+<span class="number">1</span>] = temp;</div><div class="line">				exchange = <span class="number">1</span></div><div class="line">			}</div><div class="line">		}</div><div class="line">		<span class="keyword">if</span>(!exchange) <span class="keyword">return</span>;</div><div class="line">	}</div><div class="line">}</div></pre></td></tr></table></figure>
+
+<p>　　通过观察我们作出了优化的程序，我们可以轻松的发现，冒泡排序的最优复杂度就是O(n)，即一开始就是有序的；最坏的复杂度当然是与想要的顺序反序的输入，此时将完成所有的循环，复杂度为O(n^2)，而平均的复杂度也应该是O(n^2)。</p>
+<p>（2）插入排序<br>　　算法思想：不断将后续的元素按照一定的大小顺序不断插入到前面有序的序列中。具体可将要插入数据取出，然后逐次向前不断与有序部分比较，如果要从小到大排列，那么只要被比较数较大，就后移一位，直到找到比插入数小的，将插入数插入到该位的后一位，继续该过程，直到所有的数都完成插入。因为第一个数已经有序，所以n个数也只需要（n-1）趟就可以使整个数据有序。</p>
+<figure class="highlight"><table><tr><td class="gutter"><pre><div class="line">1</div><div class="line">2</div><div class="line">3</div><div class="line">4</div><div class="line">5</div><div class="line">6</div><div class="line">7</div><div class="line">8</div><div class="line">9</div><div class="line">10</div><div class="line">11</div><div class="line">12</div><div class="line">13</div><div class="line">14</div><div class="line">15</div><div class="line">16</div></pre></td><td class="code"><pre><div class="line"><span class="keyword">template</span> &lt;<span class="keyword">class</span> T&gt;</div><div class="line"><span class="keyword">void</span> InsertSort(T *<span class="built_in">list</span>, <span class="keyword">int</span> n){</div><div class="line">	T current;</div><div class="line">	<span class="keyword">for</span>(<span class="keyword">int</span> i = <span class="number">1</span>; i &lt; n; i++){</div><div class="line">		current = <span class="built_in">list</span>[i];</div><div class="line">		<span class="keyword">for</span>(<span class="keyword">int</span> j = i-<span class="number">1</span>; j &gt;=<span class="number">0</span>; j--){</div><div class="line">			<span class="keyword">if</span> (<span class="built_in">list</span>[j] &gt; current){</div><div class="line">				<span class="built_in">list</span>[j+<span class="number">1</span>] = <span class="built_in">list</span>[j];</div><div class="line">			}</div><div class="line">			<span class="keyword">else</span>{</div><div class="line">				<span class="built_in">list</span>[j+<span class="number">1</span>] = current;</div><div class="line">				<span class="keyword">break</span>;</div><div class="line">			}</div><div class="line">		}</div><div class="line">	}</div><div class="line">}</div></pre></td></tr></table></figure>
+
+<p>　　我们从上面的代码就可以看到，如果传入序列已经排好序，那么内层循环就会直接退出，所以最优复杂度就是O(n)，最坏的复杂度也是与想要的顺序反序的输入，此时将完成所有的循环，复杂度为O(n^2)，而平均的复杂度也应该是O(n^2)。</p>
+<p>（3）选择排序<br>　　算法思想：每次遍历无序区域，找出最大值或者最小值，然后，将其交换到有序区域的边缘，使其成为有序区的一部分。很显然，该算法针对n个数也只需要（n-1）趟就可以使整个数据成为有序的序列。</p>
+<figure class="highlight"><table><tr><td class="gutter"><pre><div class="line">1</div><div class="line">2</div><div class="line">3</div><div class="line">4</div><div class="line">5</div><div class="line">6</div><div class="line">7</div><div class="line">8</div><div class="line">9</div><div class="line">10</div><div class="line">11</div><div class="line">12</div><div class="line">13</div><div class="line">14</div><div class="line">15</div><div class="line">16</div></pre></td><td class="code"><pre><div class="line"><span class="keyword">template</span> &lt;<span class="keyword">class</span> T&gt;</div><div class="line"><span class="keyword">void</span> SelectSort(T *<span class="built_in">list</span>, <span class="keyword">int</span> n){</div><div class="line">	T temp;</div><div class="line">	<span class="keyword">int</span> min;</div><div class="line">	<span class="keyword">for</span>(<span class="keyword">int</span> i = <span class="number">0</span>; i &lt; n; i++){</div><div class="line">		min = i;</div><div class="line">		<span class="keyword">for</span>(<span class="keyword">int</span> j = i+<span class="number">1</span>; j &lt; n; j++){</div><div class="line">			<span class="keyword">if</span>(<span class="built_in">list</span>[j] &lt; <span class="built_in">list</span>[min]) min = j;</div><div class="line">		}</div><div class="line">		<span class="keyword">if</span>(min ! = i){</div><div class="line">			temp = <span class="built_in">list</span>[i];</div><div class="line">			<span class="built_in">list</span>[i] = <span class="built_in">list</span>[min];</div><div class="line">			<span class="built_in">list</span>[min] = temp;</div><div class="line">		}</div><div class="line">	}</div><div class="line">}</div></pre></td></tr></table></figure>
+
+<p>　　通过上面的程序我们可以看到，选择排序每次都必须完成选择最小（最大）值，然后交换的过程，所以对于选择排序来说，它的最优复杂度和最差复杂度还有平均复杂度都为O(n^2)。</p>
+
+      
+    </div>
+    <footer class="article-footer">
+      
+      
+    </footer>
+  </div>
+  
+    
+<nav id="article-nav">
+  
+    <a href="/2015/03/24/2015-03-24-150934/" id="article-nav-newer" class="article-nav-link-wrap">
+      <strong class="article-nav-caption">&lt;</strong>
+      <div class="article-nav-title">
+        
+          排序算法总结&lt;二&gt;
+        
+      </div>
+    </a>
+  
+  
+    <a href="/2015/03/22/2015-03-22-195724 /" id="article-nav-older" class="article-nav-link-wrap">
+      <div class="article-nav-title">有理数类实现的思考</div>
+      <strong class="article-nav-caption">&gt;</strong>
+    </a>
+  
+</nav>
+
+  
+</article>
+
+
+<div class="share">
+	<!-- JiaThis Button BEGIN -->
+	<div class="jiathis_style">
+		<span class="jiathis_txt">分享到：</span>
+		<a class="jiathis_button_tsina"></a>
+		<a class="jiathis_button_cqq"></a>
+		<a class="jiathis_button_douban"></a>
+		<a class="jiathis_button_weixin"></a>
+		<a class="jiathis_button_tumblr"></a>
+		<a href="http://www.jiathis.com/share" class="jiathis jiathis_txt jtico jtico_jiathis" target="_blank"></a>
+	</div>
+	<script type="text/javascript" src="http://v3.jiathis.com/code/jia.js?uid=1405949716054953" charset="utf-8"></script>
+	<!-- JiaThis Button END -->
+</div>
+
+
+
+<div class="duoshuo">
+	<!-- 多说评论框 start -->
+	<div class="ds-thread" data-thread-key="2015-03-23-213552" data-title="排序算法总结&lt;一&gt;" data-url="http://yoursite.com/2015/03/23/2015-03-23-213552/"></div>
+	<!-- 多说评论框 end -->
+	<!-- 多说公共JS代码 start (一个网页只需插入一次) -->
+	<script type="text/javascript">
+	var duoshuoQuery = {short_name:"whjgithub"};
+	(function() {
+		var ds = document.createElement('script');
+		ds.type = 'text/javascript';ds.async = true;
+		ds.src = (document.location.protocol == 'https:' ? 'https:' : 'http:') + '//static.duoshuo.com/embed.js';
+		ds.charset = 'UTF-8';
+		(document.getElementsByTagName('head')[0] 
+		 || document.getElementsByTagName('body')[0]).appendChild(ds);
+	})();
+	</script>
+	<!-- 多说公共JS代码 end -->
+</div>
+
+
+
+
+      <footer id="footer">
+  <div class="outer">
+    <div id="footer-info">
+    	<div class="footer-left">
+    		&copy; 2015 WHJ
+    	</div>
+      	<div class="footer-right">
+      		<a href="http://hexo.io/" target="_blank">Hexo</a>  Theme <a href="https://github.com/litten/hexo-theme-yilia" target="_blank">Yilia</a> by Litten
+      	</div>
+    </div>
+  </div>
+</footer>
+    </div>
+    
+  <link rel="stylesheet" href="/fancybox/jquery.fancybox.css" type="text/css">
+
+  <script src="/fancybox/jquery.fancybox.pack.js" type="text/javascript"></script>
+
+  <script src="/js/main.js" type="text/javascript"></script>
+
+
+  </div>
+</body>
+</html>
