@@ -1,0 +1,411 @@
+<!DOCTYPE html>
+<html>
+<head>
+  <meta charset="utf-8">
+  
+  <title>Gerrit代码审查-简介 | WHJ&#39;s blog</title>
+  <meta name="viewport" content="width=device-width, initial-scale=1, maximum-scale=1">
+  <meta name="description" content="版本 v2.8.4-19-g4548330
+　　Gerrit是建立在Git版本控制系统之上的基于Web的代码审查工具，但是可能你已经知道了这些，如果你以前读过这个指南的话。这个介绍的目的是让你能够回答这样一个问题，Gerrit是适合我的工具吗？它能很好的适应我的工作流程和我的工作组吗？">
+<meta property="og:type" content="article">
+<meta property="og:title" content="Gerrit代码审查-简介">
+<meta property="og:url" content="http://yoursite.com/2015/07/22/2015-07-22-225035/">
+<meta property="og:site_name" content="WHJ's blog">
+<meta property="og:description" content="版本 v2.8.4-19-g4548330
+　　Gerrit是建立在Git版本控制系统之上的基于Web的代码审查工具，但是可能你已经知道了这些，如果你以前读过这个指南的话。这个介绍的目的是让你能够回答这样一个问题，Gerrit是适合我的工具吗？它能很好的适应我的工作流程和我的工作组吗？">
+<meta property="og:image" content="https://review.openstack.org/Documentation/images/intro-quick-central-repo.png">
+<meta property="og:image" content="https://review.openstack.org/Documentation/images/intro-quick-central-gerrit.png">
+<meta property="og:image" content="https://review.openstack.org/Documentation/images/intro-quick-new-review.jpg">
+<meta property="og:image" content="https://review.openstack.org/Documentation/images/intro-quick-review-line-comment.jpg">
+<meta property="og:image" content="https://review.openstack.org/Documentation/images/intro-quick-hot-key-help.jpg">
+<meta property="og:image" content="https://review.openstack.org/Documentation/images/intro-quick-reviewing-the-change.jpg">
+<meta property="og:image" content="https://review.openstack.org/Documentation/images/intro-quick-review-2-patches.jpg">
+<meta property="og:image" content="https://review.openstack.org/Documentation/images/intro-quick-verifying.jpg">
+<meta name="twitter:card" content="summary">
+<meta name="twitter:title" content="Gerrit代码审查-简介">
+<meta name="twitter:description" content="版本 v2.8.4-19-g4548330
+　　Gerrit是建立在Git版本控制系统之上的基于Web的代码审查工具，但是可能你已经知道了这些，如果你以前读过这个指南的话。这个介绍的目的是让你能够回答这样一个问题，Gerrit是适合我的工具吗？它能很好的适应我的工作流程和我的工作组吗？">
+
+  
+    <link rel="alternative" href="/atom.xml" title="WHJ&#39;s blog" type="application/atom+xml">
+  
+  
+    <link rel="icon" href="/favicon.png">
+  
+  <link rel="stylesheet" href="/css/style.css" type="text/css">
+
+  <script src="http://libs.baidu.com/jquery/1.9.0/jquery.js"></script>
+</head>
+<body>
+  <div id="container">
+    <div class="left-col">
+    <div class="overlay"></div>
+<div class="intrude-less">
+	<header id="header" class="inner">
+		<div class="profilepic">
+			<img src="http://whj-img.qiniudn.com/2014-11-03_145609.png">
+		</div>
+
+		<hgroup>
+		  <h1 class="header-author"><a href="/">WHJ</a></h1>
+		</hgroup>
+
+		
+		<p class="header-subtitle">WHJ&#39;s Heroic Joker</p>
+		
+
+		
+			<div class="switch-btn">
+				<div class="icon">
+					<div class="icon-ctn">
+						<div class="icon-wrap icon-house" data-idx="0">
+							<div class="birdhouse"></div>
+							<div class="birdhouse_holes"></div>
+						</div>
+						<div class="icon-wrap icon-ribbon hide" data-idx="1">
+							<div class="ribbon"></div>
+						</div>
+						
+						<div class="icon-wrap icon-link hide" data-idx="2">
+							<div class="loopback_l"></div>
+							<div class="loopback_r"></div>
+						</div>
+						
+						
+					</div>
+					
+				</div>
+				<div class="tips-box hide">
+					<div class="tips-arrow"></div>
+					<ul class="tips-inner">
+						<li>菜单</li>
+						<li>标签</li>
+						
+						<li>友情链接</li>
+						
+						
+					</ul>
+				</div>
+			</div>
+		
+
+		<div class="switch-area">
+			<div class="switch-wrap">
+				<section class="switch-part switch-part1">
+					<nav class="header-menu">
+						<ul>
+						
+							<li><a href="/">主页</a></li>
+				        
+							<li><a href="/archives">所有文章</a></li>
+				        
+							<li><a href="/about">关于作者</a></li>
+				        
+						</ul>
+					</nav>
+					<nav class="header-nav">
+						<div class="social">
+							
+								<a class="github" target="_blank" href="https://github.com/whjgithub" title="github">github</a>
+					        
+								<a class="rss" target="_blank" href="/atom.xml" title="rss">rss</a>
+					        
+						</div>
+					</nav>
+				</section>
+				
+				
+				<section class="switch-part switch-part2">
+					<div class="widget tagcloud">
+						<a href="/tags/javascript/" style="font-size: 13.33px;">javascript</a><a href="/tags/python/" style="font-size: 13.33px;">python</a><a href="/tags/原创/" style="font-size: 16.67px;">原创</a><a href="/tags/数据结构/" style="font-size: 13.33px;">数据结构</a><a href="/tags/笔记/" style="font-size: 20.00px;">笔记</a><a href="/tags/算法/" style="font-size: 10.00px;">算法</a><a href="/tags/随笔/" style="font-size: 10.00px;">随笔</a>
+					</div>
+				</section>
+				
+				
+				
+				<section class="switch-part switch-part3">
+					
+			          <a target="_blank" class="main-nav-link switch-friends-link" href="http://chenpengdsp.com">CP师兄的博客</a>
+			        
+				</section>
+				
+
+				
+			</div>
+		</div>
+	</header>				
+</div>
+    </div>
+    <div class="mid-col">
+      <nav id="mobile-nav">
+  	<div class="overlay"></div>
+	<div class="intrude-less">
+		<header id="header" class="inner">
+			<div class="profilepic">
+				<img src="http://whj-img.qiniudn.com/2014-11-03_145609.png">
+			</div>
+
+			<hgroup>
+			  <h1 class="header-author"><a href="/">WHJ</a></h1>
+			</hgroup>
+			
+			<p class="header-subtitle">WHJ&#39;s Heroic Joker</p>
+			
+			<nav class="header-menu">
+				<ul>
+				
+					<li><a href="/">主页</a></li>
+		        
+					<li><a href="/archives">所有文章</a></li>
+		        
+					<li><a href="/about">关于作者</a></li>
+		        
+		        <div class="clearfix"></div>
+				</ul>
+			</nav>
+			<nav class="header-nav">
+				<div class="social">
+					
+						<a class="github" target="_blank" href="https://github.com/whjgithub" title="github">github</a>
+			        
+						<a class="rss" target="_blank" href="/atom.xml" title="rss">rss</a>
+			        
+				</div>
+			</nav>
+		</header>				
+	</div>
+</nav>
+      <article id="post-2015-07-22-225035" class="article article-type-post" itemscope itemprop="blogPost">
+  
+    <div class="article-meta">
+      <a href="/2015/07/22/2015-07-22-225035/" class="article-date">
+  	<time datetime="2015-07-22T14:50:35.000Z" itemprop="datePublished">Jul 22 2015</time>
+</a>
+      
+      
+  <ul class="article-tag-list"><li class="article-tag-list-item"><a class="article-tag-list-link" href="/tags/笔记/">笔记</a></li></ul>
+
+    </div>
+  
+  <div class="article-inner">
+    
+      <input type="hidden" class="isFancy" />
+    
+    
+      <header class="article-header">
+        
+  
+    <h1 class="article-title" itemprop="name">
+      Gerrit代码审查-简介
+    </h1>
+  
+
+      </header>
+    
+    <div class="article-entry" itemprop="articleBody">
+      
+        <pre><code>版本 v2.8.4-19-g4548330
+</code></pre><p>　　Gerrit是建立在Git版本控制系统之上的基于Web的代码审查工具，但是可能你已经知道了这些，如果你以前读过这个指南的话。这个介绍的目的是让你能够回答这样一个问题，Gerrit是适合我的工具吗？它能很好的适应我的工作流程和我的工作组吗？<br><a id="more"></a></p>
+<h2 id="Gerrit是什么？">Gerrit是什么？</h2>
+<p>　　我想我可以这么认为，正在读这篇文章的你，已经很信服代码整体审查的好处，但想要一些技术支持来使之变得更加简单。代码审查对于不同的人来说意义也不同，对有些人来说，是全团队一起开一个正式的会议，用投影仪逐行分析代码；对其他人来说，只是在提交代码之前有其他人浏览一下。Gerrit想要提供一种轻量级的框架，这种框架适用于审查每个被准入代码库之前的提交。针对代码的修改会被上载，但是并不会变成项目的一部分直到他们被审查和批准通过。</p>
+<p>　　在许多方面，这就是简单的使用工具来支持提交补丁的开源过程，这些补丁必须通过项目成员的审查后才能应用到代码库。然而Gerrit又更近了一步，它让一件事变得更简单了，那就是让所有参与项目的提交者保证所有的修改都在被应用到代码库之前被审查了。正因为如此，Gerrit也同样适用于所有的用户都是可信任的提交者的情况，比如闭源的商业开发。无论哪种方式，我们还是希望通过代码审查来提高代码的质量和可维护性。毕竟，在仅有一个人看过这份代码并且此人离开了之后，代码维护起来就有点困难了。</p>
+<p>　　首先，Gerrit是一个暂存区域，所有的修改在变成代码库的一部分之前都必须先在这里通过审查。对于这个审查过程来说，捕捉关于修改得记录和评论来使关于修改的讨论成为可能同样也是一种推动。对于一个分散的不能面对面谈话的团队，这尤其有用。即使对于共处一地的并且有一个评估工具作为备选的团队，这仍是有益的,因为审查可以一次被完成，这对于审查者来说是十分方便的。这允许开发人员在记忆仍清晰的时候就创建评论和解释变化。如果没有这样的工具，他们要么需要打断别人来审查代码或者，要么需要在他们已经进入下一任务的时候切换上下文解释以前的修改。</p>
+<p>　　这也创建了一个持久的谈话记录，这个记录对于回答“我知道我们是因为某些理由才作了修改”这一不可避免的问题是有用的。</p>
+<h2 id="Gerrit适合什么样的场景？">Gerrit适合什么样的场景？</h2>
+<p>　　任何一个有多个成员的团队都有某种类型的中心源代码库（或者他们应该有）。理论上，Git在没有这样一个中心位置的情况下也可以工作，但是在实践中，通常都会有一个中心代码库。实际上，这个代码库是项目中的权威副本。每个人从这里获取代码，也把代码推送到这里，并且通常在这里构造服务器，同时其他的一些工具也把这里当成源。</p>
+<p><img src="https://review.openstack.org/Documentation/images/intro-quick-central-repo.png" alt=""></p>
+<p>　　　　　　　　　　　　　　　　　　　　　　图一 中心源代码库</p>
+<p>　　Gerrit被部署在中心库中，并给它附加了一个概念：悬而未决的修改的仓库。每个人仍然从这个权威的仓库中取得代码，但是不同于直接把代码推送到这个仓库中，他们将推送到这个存储悬而未决的修改的位置。一个修改只有在被审查和批准后，它才可以被提交到权威仓库并成为整个项目的一个被接受的部分。</p>
+<p><img src="https://review.openstack.org/Documentation/images/intro-quick-central-gerrit.png" alt=""></p>
+<p>　　　　　　　　　　　　　　　　　　　　图二 Gerrit在中心仓库的位置</p>
+<p>　　像其他的代码库托管解决方案一样，Gerrit也有一个强大的接入控制模型（<a href="https://review.openstack.org/Documentation/access-control.html" target="_blank" rel="external">access control model</a>）。用户甚至可以被授权直接把代码推送到中心代码库，而不必通过任何的代码审查。Gerrit升值可以不使用代码审查，而只简单的用来承载库和控制访问。但是通常来说，经过审查步骤会更加的简单和安全，即使是对于那些有权直接推送的用户来说。</p>
+<h2 id="一个修改的生命周期">一个修改的生命周期</h2>
+<p>　　认识Gerrit如何工作的最简单的方式就是，跟踪观察一个修改的整个生命周期。为此，我们假设Gerrit服务器工作在一个叫gerrithost的服务器上，并且他的HTTP接口在8080端口上，SSH接口在29418端口上。我们工作的项目名称是RecipeBook，我们会在主分支上开发。</p>
+<h3 id="克隆仓库">克隆仓库</h3>
+<p>　　很显然，我们要做的第一件事就是获得我们要修改的源文件。和其他的Git项目一样，我可以从由gerrit承载的中心仓库里克隆。例如：</p>
+<pre><code>$ git clone ssh:<span class="comment">//gerrithost:29418/RecipeBook.git RecipeBook</span>
+Cloning <span class="keyword">into</span> RecipeBook<span class="attribute">...</span>
+</code></pre><p>　　然后，我们必须修改代码并在本地提交。这只是标准的编辑和git过程，Gerrit并没有在代码库中作出任何实际的改变。虽然没有被严格的要求，但是我们最好在提交的信息里包含一个Change-Id，以此来把不同版本的被审查的相同修改关联起来。Gerrit包含了一个标准的<a href="https://review.openstack.org/Documentation/user-changeid.html" target="_blank" rel="external">Change-Id commit-msg hook</a>，其将在你提交的时候生成一个独一无二的Change-Id。如果你没有这样做的话，当你提交你的修改要求审查时Gerrit将会自动生成一个Change-Id。但是，由于并没有在你的提交信息中包含Change-Id，所以如果你需要上载另一个你的修改版本的时候，需要手动的拷贝它。为此，你最安装钩子程序并且把这件事交给系统。</p>
+<h3 id="创建审查">创建审查</h3>
+<p>　　一旦你对程序作出了修改，并且在本地提交了修改，那么就需要把它推送到Gerrit来让它接受审查。这些会随着Git推送到Gerrit服务器的而被完成。因为我们直接从Gerrit克隆了我们的本地代码库，所以它就是最原始的，因此我们并不需要再重定义远端。</p>
+<pre><code>$ &lt;work&gt;
+$ git commit
+[master <span class="number">9651</span>f22] Change <span class="keyword">to</span> a proper, yeast based pizza dough.
+ <span class="number">1</span> files changed, <span class="number">3</span> insertions(+), <span class="number">2</span> deletions(-)
+$ git push origin HEAD:refs/<span class="keyword">for</span>/master
+Counting objects: <span class="number">5</span>, <span class="keyword">done</span>.
+Delta compression using up <span class="keyword">to</span> <span class="number">8</span> threads.
+Compressing objects: <span class="number">100</span>% (<span class="number">2</span>/<span class="number">2</span>), <span class="keyword">done</span>.
+Writing objects: <span class="number">100</span>% (<span class="number">3</span>/<span class="number">3</span>), <span class="number">542</span> bytes, <span class="keyword">done</span>.
+Total <span class="number">3</span> (delta <span class="number">0</span>), reused <span class="number">0</span> (delta <span class="number">0</span>)
+remote:
+remote: New Changes:
+remote:   http:<span class="comment">//gerrithost:8080/68</span>
+remote:
+To ssh:<span class="comment">//gerrithost:29418/RecipeBook.git</span>
+ * [<span class="keyword">new</span> branch]      HEAD -&gt; refs/<span class="keyword">for</span>/master
+</code></pre><p>　　唯一有变化的就是<code>refs/for/master</code>分支。这是一个魔法分支，它用来创建那些针对主分支的修改的审查。对于每一个被跟踪的分支，Gerrit都会创建一个存储你的推送并生成审查的魔法分支<code>refs/for/(branch_name)</code>。<br>　　在这个命令的输出中，你会注意到有一个链接，会连接到我们刚刚推送代码上去的Gerrit服务器的HTTP接口。这就是我们审查这些提交的网络接口。让我们点开链接查看一下我们获取到了什么。<br><img src="https://review.openstack.org/Documentation/images/intro-quick-new-review.jpg" alt=""></p>
+<p>　　　　　　　　　　　　　　　　　　　　　　图3 Gerrit代码审查页</p>
+<p>　　上图就是Gerrit代码审查页，其他人会在这里审查修改。在这个页面中，你可以查看你的修改、增加一些注释来解释你做了些什么和为什么这样做，你甚至可以增加一个需要审查这些修改的人员列表，但是目前这个页面还没有太多的内容。</p>
+<p>　　审查者可以通过多种方式找到他们想要审查的修改。Gerrit有一个强大的<a href="https://review.openstack.org/Documentation/user-search.html" target="_blank" rel="external">搜索</a>功能，它允许项目的领导者（或者其他人）找到那些需要被审查的修改。用户同样也可以用一些搜索语法在Gerrit项目中安装监听器，这样的话一旦匹配到相应的修改Gerrit就会通知他们。所以在创建一个审查的时候就添加审查者只是一种推荐做法。</p>
+<h3 id="审查修改">审查修改</h3>
+<p>　　看到上述的代码审查页面，审查者的生命周期就开始了。当他们决定要审查这些修改的时候，他们有多种途径进入。在这个页面需要特别注意的是以“Need”开头的两行：</p>
+<pre><code><span class="keyword">*</span> <span class="keyword">Need</span> Verified
+<span class="keyword">*</span> <span class="keyword">Need</span> Code-Review
+</code></pre><p>　　Gerrit的默认工作流需要修改在被接受前通过两次检查。代码审查（Code-Review）就是某些人查看代码，保证它符合项目的指导方针、意图等等。验证（Verifying）是检查代码是否编译通过、单元测试是否通过等等。验证一般由自动编译服务器来完成而不是手工完成。甚至有<a href="https://wiki.jenkins-ci.org/display/JENKINS/Gerrit+Trigger" target="_blank" rel="external">Gerrit Trigger Jenkins Plugin</a>这样的插件来自动化的完成上载修改的编译并对应的更新验证的得分。</p>
+<p>　　值得重点关注的是：代码审查和验证在Gerrit中拥有不同的权限，这允许这些任务被区分开来。例如，一个自动化的进程将有权力来验证而不是代码审查。由于我们是代码审查者，我们会要来审查这些代码。为了完成这个任务，我们可以在Gerrit的网络接口中浏览它们，同样我们也可以通过恰当的选项在统一的或者并排的文件差异中查看它们。在下面的例子中，我们选择了并列的浏览模式。在任一浏览模式中，我们可以通过双击某行来添加内联的注释（或者单击某行的行号）来对该行进行注释。同样你也可以在表格头部双击任地方（不仅限于“Patch Set”文字处），或者是单击行号列头部的图标来增加文件注释。一旦发表，这些评论对所有对修改有话语权的人都可见。<br><img src="https://review.openstack.org/Documentation/images/intro-quick-review-line-comment.jpg" alt=""></p>
+<p>　　　　　　　　　　　　　　　　　　　　　　　图四 并排视图</p>
+<p>  代码审查者最终将花费大部分的时间在浏览这些页面，查看和注释这些修改上。为了使这个过程更有效率，Gerrit针对大部分的操作都设有快捷键（甚至有一些操作仅能通过热键完成）。任何时候你都可以通过点击<code>？</code>按键来查看这些键盘快捷键。<br><img src="https://review.openstack.org/Documentation/images/intro-quick-hot-key-help.jpg" alt=""></p>
+<p>　　　　　　　　　　　　　　　　　　　　图5 Gerrit的热键帮助菜单</p>
+<p>　　一旦我们检查完这些修改，我们需要完成审查这些提交。我们可以通过点击我们开始时修改页面上的<em>Review</em>按钮来完成这项任务。这允许我们进入键入一个代码审查的标签和消息。<br><img src="https://review.openstack.org/Documentation/images/intro-quick-reviewing-the-change.jpg" alt=""></p>
+<p>　　　　　　　　　　　　　　　　　　　　　　　图6 审查修改</p>
+<p>　　审查者选择的标签决定了接下来发生的事。+1和-1表示修改是可选择的，而+2和-2表示同意和阻止该修改。一个修改如果想要被接受，那么它需要至少一个+2并且没有-2的投票。虽然这些是数值，但是它们无论如何也不能累加，两个+1是不等于+2的。</p>
+<p>　　不管哪个标签被选择，只要<em>Publish Comments</em>按钮被点击，那么封面消息和任何针对文件的注释将对所有用户可见。在这种情况下，修改没有被接受，所以创建者需要重做文件修改。让我们把角色切换回开始时的创建者。</p>
+<h3 id="重做修改">重做修改</h3>
+<p>　　只要我们在上载这些修改之前设置了<a href="https://review.openstack.org/Documentation/user-changeid.html" target="_blank" rel="external">Change-Id commit-msg hook</a>，那么重做修改就很简单了。为了上载一个重做的修改，我们要做的就是推送一个在消息里有相同Change-Id的新的提交。由于在钩子（hook）中添加了最初提交的Change-Id，我们可以很简单的检验并且修复这个提交。之后，我们就以创建审查时一样的方式把它推送到Gerrit。下面是例子：</p>
+<pre><code>$ &lt;checkout first commit&gt;
+ &lt;rework&gt;
+$ git commit --amend
+$ git push origin HEAD:refs/<span class="keyword">for</span>/master
+Counting objects: <span class="number">5</span>, <span class="keyword">done</span>.
+Delta compression using up <span class="keyword">to</span> <span class="number">8</span> threads.
+Compressing objects: <span class="number">100</span>% (<span class="number">2</span>/<span class="number">2</span>), <span class="keyword">done</span>.
+Writing objects: <span class="number">100</span>% (<span class="number">3</span>/<span class="number">3</span>), <span class="number">546</span> bytes, <span class="keyword">done</span>.
+Total <span class="number">3</span> (delta <span class="number">0</span>), reused <span class="number">0</span> (delta <span class="number">0</span>)
+To ssh:<span class="comment">//gerrithost:29418/RecipeBook.git</span>
+ * [<span class="keyword">new</span> branch]      HEAD -&gt; refs/<span class="keyword">for</span>/master
+</code></pre><p>　　可以看到，这次的输出略微有些不同。我们没有被告知生成了一个新的审查，因为我们把它添加到了一个已经存在的审查。重做的提交上载完成之后，我们可以回到Gerrit的网页接口，然后查看我们的修改。<br><img src="https://review.openstack.org/Documentation/images/intro-quick-review-2-patches.jpg" alt=""></p>
+<p>　　　　　　　　　　　　　　　　　　　　　图7 审查重做任务</p>
+<p>　　如果你仔细观察的话，你会发现这里有两个与这个修改有关的补丁集，分别是初始的提交和重做的版本。为了不重复上述的过程，我们假设这次的代码审查者给了我们这个补丁一个+2的分数。</p>
+<h3 id="尝试作出修改">尝试作出修改</h3>
+<p>　　Gerrit的默认工作流中有两种署名，分别是代码审查和验证。验证意味着检查修改是否实际工作了。这通常是检查代码的编译、单元的测试以及类似的检查。一个真正的项目可以决定他们在此到底要做多少。值得注意的是，这仅仅是Gerrit的默认工作流，验证校验可以在实际中被移除或者加入其它的。</p>
+<p>　　正如在代码审查部分被提到的，验证是典型的运用<a href="https://wiki.jenkins-ci.org/display/JENKINS/Gerrit+Trigger" target="_blank" rel="external">Gerrit Trigger Jenkins Plugin</a>或者类似插件的自动化进程。但是，有时代码需要被手动验证，或者审查者需要检查一些东西是否工作或者它是如何工作的。有些时候，在开发环境中开发代码比网络交互页面更适合。所有这些都涉及到一些人，这些人必须改变他们的开发环境。Gerrit通过让每个修改展示为一个git的分支来让这个过程变得更简单。所以，所有的审查者要做的就是获取并检查从Gerrit获取的分支，然后他们就可以得到这些修改。</p>
+<p>　　我们甚至不用把它想的那么难，如果你看到了早前的Gerrit代码审查页面的截图，你就会注意到一个<em>download</em>命令。我们需要做的就是拷贝复制这个命令，并在Gerrit checkout命令中执行，便可以获得这些修改。</p>
+<pre><code>$ git fetch <span class="keyword">http</span>://gerrithost:<span class="number">8080</span>/p/RecipeBook refs/changes/<span class="number">68</span>/<span class="number">68</span>/<span class="number">2</span>
+From <span class="keyword">http</span>://gerrithost:<span class="number">8080</span>/p/RecipeBook
+ * branch            refs/changes/<span class="number">68</span>/<span class="number">68</span>/<span class="number">2</span> -&gt; FETCH_HEAD
+$ git checkout FETCH_HEAD
+Note: checking out <span class="string">'FETCH_HEAD'</span>.
+
+You are <span class="operator">in</span> <span class="string">'detached HEAD'</span> state. You can look around, make experimental
+changes <span class="operator">and</span> commit them, <span class="operator">and</span> you can discard <span class="keyword">any</span> commits you make <span class="operator">in</span> this
+state <span class="keyword">without</span> impacting <span class="keyword">any</span> branches <span class="keyword">by</span> performing another checkout.
+
+If you want <span class="built_in">to</span> <span class="built_in">create</span> <span class="operator">a</span> <span class="built_in">new</span> branch <span class="built_in">to</span> retain commits you <span class="built_in">create</span>, you may
+<span class="built_in">do</span> so (now <span class="operator">or</span> later) <span class="keyword">by</span> <span class="keyword">using</span> -b <span class="operator">with</span> <span class="operator">the</span> checkout <span class="command"><span class="keyword">command</span> <span class="title">again</span>. <span class="title">Example</span>:</span>
+
+  git checkout -b new_branch_name
+
+HEAD is now <span class="keyword">at</span> d5dacdb... Change <span class="built_in">to</span> <span class="operator">a</span> proper, yeast based pizza dough.
+</code></pre><p>　　正如上述那么简单，我们现在就有可以在我们的工作备份中操作这些变化。你可能对那些refspec的数字表示什么很感兴趣。</p>
+<ul>
+<li>第一个68是修改的ID模上100的值。这个初始数字存在的唯一原因是：在git仓库的任意给定目录中，减少文件的数量。</li>
+<li>第二个68是修改的完整ID。你可以观察到这个数字出现在Gerrit审查页面的URL中。</li>
+<li>2是在修改中的补丁集。在这个例子中，我们上载了一些补丁，所以我们想要第二个补丁集而不是原始的被审查者拒绝的那个。</li>
+</ul>
+<h3 id="手动验证修改">手动验证修改</h3>
+<p>　　为了简便，我们想要手动验证这些修改。验证者可能和审查者是同一个人，但也有可能是完全不同的人。它有项目的大小和如何工作来决定。如果你拥有验证权限，然后当你在Gerrit网页接口中点击<em>Review</em>按钮，你就会看到一个验证分数。<br><img src="https://review.openstack.org/Documentation/images/intro-quick-verifying.jpg" alt=""></p>
+<p>　　　　　　　　　　　　　　　　　　　　　　图8 验证修改</p>
+<p>　　和代码审查不同，验证没有+2和-2等级，它仅有通过或者不通过，所以我们让修改通过就给+1分（反之-1分）。</p>
+<h3 id="提交修改">提交修改</h3>
+<p>　　你可能已经注意到，在验证页面的截图上，有两个提交按钮来提交分数，分别是<em>Publish Comments</em>和<em>Publish and Submit</em>。<code>publish and submit</code>按钮总是可见的，但是只会在修改符合可提交的标准时才会起作用（即已完成验证和代码审查）。所以通过点击一个按钮来发布评审分数以及提交修改是非常方便的。如果在此你仅选择了发布注释，那么分数会被存储但是修改目前还不会被允许进入代码库。在这种情况下，主屏幕上将会有一个<em>Submit Patch Set X</em>按钮。类似于代码审查（Code-Review）和验证（Verify）是可以被不同的用户完成的不同操作，提交是可以被限制到另一个用户组的第三个操作。</p>
+<p>　　点击<em>Publish</em>、<em>Submit</em>或者<em>Submit Patch Set X</em>按钮将会把修改合并到代码库主要的部分，并成为项目中一个被接受的部分。经此之后，任何人从git仓库获取数据将会接收到这个修改，当然是作为主分支的一部分。</p>
+<hr>
+<p><a href="https://review.openstack.org/Documentation/index.html" target="_blank" rel="external">Gerrit Code Review</a>部分</p>
+<p>版本 v2.8.4-19-g4548330</p>
+
+      
+    </div>
+    <footer class="article-footer">
+      
+      
+    </footer>
+  </div>
+  
+    
+<nav id="article-nav">
+  
+    <a href="/2015/08/04/2015-08-04-222707/" id="article-nav-newer" class="article-nav-link-wrap">
+      <strong class="article-nav-caption">&lt;</strong>
+      <div class="article-nav-title">
+        
+          Gerrrit查询
+        
+      </div>
+    </a>
+  
+  
+    <a href="/2015/03/24/2015-03-24-150934/" id="article-nav-older" class="article-nav-link-wrap">
+      <div class="article-nav-title">排序算法总结&lt;二&gt;</div>
+      <strong class="article-nav-caption">&gt;</strong>
+    </a>
+  
+</nav>
+
+  
+</article>
+
+
+<div class="share">
+	<!-- JiaThis Button BEGIN -->
+	<div class="jiathis_style">
+		<span class="jiathis_txt">分享到：</span>
+		<a class="jiathis_button_tsina"></a>
+		<a class="jiathis_button_cqq"></a>
+		<a class="jiathis_button_douban"></a>
+		<a class="jiathis_button_weixin"></a>
+		<a class="jiathis_button_tumblr"></a>
+		<a href="http://www.jiathis.com/share" class="jiathis jiathis_txt jtico jtico_jiathis" target="_blank"></a>
+	</div>
+	<script type="text/javascript" src="http://v3.jiathis.com/code/jia.js?uid=1405949716054953" charset="utf-8"></script>
+	<!-- JiaThis Button END -->
+</div>
+
+
+
+<div class="duoshuo">
+	<!-- 多说评论框 start -->
+	<div class="ds-thread" data-thread-key="2015-07-22-225035" data-title="Gerrit代码审查-简介" data-url="http://yoursite.com/2015/07/22/2015-07-22-225035/"></div>
+	<!-- 多说评论框 end -->
+	<!-- 多说公共JS代码 start (一个网页只需插入一次) -->
+	<script type="text/javascript">
+	var duoshuoQuery = {short_name:"whjgithub"};
+	(function() {
+		var ds = document.createElement('script');
+		ds.type = 'text/javascript';ds.async = true;
+		ds.src = (document.location.protocol == 'https:' ? 'https:' : 'http:') + '//static.duoshuo.com/embed.js';
+		ds.charset = 'UTF-8';
+		(document.getElementsByTagName('head')[0] 
+		 || document.getElementsByTagName('body')[0]).appendChild(ds);
+	})();
+	</script>
+	<!-- 多说公共JS代码 end -->
+</div>
+
+
+
+
+      <footer id="footer">
+  <div class="outer">
+    <div id="footer-info">
+    	<div class="footer-left">
+    		&copy; 2015 WHJ
+    	</div>
+      	<div class="footer-right">
+      		<a href="http://hexo.io/" target="_blank">Hexo</a>  Theme <a href="https://github.com/litten/hexo-theme-yilia" target="_blank">Yilia</a> by Litten
+      	</div>
+    </div>
+  </div>
+</footer>
+    </div>
+    
+  <link rel="stylesheet" href="/fancybox/jquery.fancybox.css" type="text/css">
+
+  <script src="/fancybox/jquery.fancybox.pack.js" type="text/javascript"></script>
+
+  <script src="/js/main.js" type="text/javascript"></script>
+
+
+  </div>
+</body>
+</html>
